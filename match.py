@@ -1,13 +1,14 @@
 from player import Player
 
 class Match:
-    def __init__(self, map_name, game_info):
+    def __init__(self, map_name, game_info, tick_rate=64):
         self.players = []
         self.map_name = map_name
         self.round = 0
         self.tick = 0
         self.max_tick = game_info.index[-1]
         self.game_info = game_info # pd dataframe sorted by tick
+        self.tick_rate = tick_rate
 
     def add_player(self, player: Player) -> None:
         self.players.append(player)
@@ -20,7 +21,6 @@ class Match:
         # inefficient, might need to change
         current_tick = self.game_info[self.game_info["tick"] == self.tick]
         for player in self.players:
-            print("Updated player position of ", player.name)
             player.x = current_tick[current_tick["player_steamid"] == player.steam_id]["X"].values[0]
             player.y = current_tick[current_tick["player_steamid"] == player.steam_id]["Y"].values[0]
             player.z = current_tick[current_tick["player_steamid"] == player.steam_id]["Z"].values[0]
