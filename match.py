@@ -1,6 +1,6 @@
 from player import Player
 
-class Game:
+class Match:
     def __init__(self, map_name, game_info):
         self.players = []
         self.map_name = map_name

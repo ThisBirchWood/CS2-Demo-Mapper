@@ -1,5 +1,5 @@
 import demoparser2
-from game import Game
+from match import Match
 from player import Player
 
 demo_parser = demoparser2.DemoParser("demo.dem")
@@ -14,13 +14,13 @@ class Parser:
 
 if __name__ == "__main__":
     parser = Parser("demo.dem")
-    game = Game("de_dust2", parser.demo_info)
+    match = Match("de_dust2", parser.demo_info)
 
     for index, row in parser.players.iterrows():
-        game.add_player(Player(row["name"], row["steamid"]))
+        match.add_player(Player(row["name"], row["steamid"]))
 
-    while game.tick < game.max_tick:
-        game.next_tick()
+    while match.tick < match.max_tick:
+        match.next_tick()
 
     
 
