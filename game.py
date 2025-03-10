@@ -66,9 +66,13 @@ if __name__ == "__main__":
 
     demo_parser = demoparser2.DemoParser("demo.dem")
     game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid"])
+    header_info = demo_parser.parse_header()
+    map_name = header_info['map_name']
     players = demo_parser.parse_player_info()
 
-    m = Match("de_dust2", game_info)
+    start_tick = int(input())
+    m = Match(map_name, game_info)
+    m.tick = start_tick
     for index, row in players.iterrows():
         m.add_player(Player(row["name"], row["steamid"]))
 

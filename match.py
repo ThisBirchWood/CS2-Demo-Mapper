@@ -20,6 +20,11 @@ class Match:
     def _update_player_positions(self) -> None:
         # inefficient, might need to change
         current_tick = self.game_info[self.game_info["tick"] == self.tick]
+        
+        # empty tick
+        if current_tick.empty:
+            return
+
         for player in self.players:
             player.x = current_tick[current_tick["player_steamid"] == player.steam_id]["X"].values[0]
             player.y = current_tick[current_tick["player_steamid"] == player.steam_id]["Y"].values[0]
