@@ -1,9 +1,10 @@
 import pygame
 from match import Match
 from player import Player
-from utils import mapped_value
+from coordinate_manager import CoordinateManager
 
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 800, 800
+MAP_SIZE = 700
 FPS = 60
 
 class Game:
@@ -19,6 +20,7 @@ class Game:
         self.running = True
 
         self.match = match
+        self.coordinate_manager = CoordinateManager(WIDTH, HEIGHT)
 
     def handle_events(self):
         """Handles user inputs."""
@@ -33,16 +35,27 @@ class Game:
     def draw(self):
         """Draws everything on screen."""
         self.screen.fill((30, 30, 30))  # Clear screen
+        
+        # Draw map from image
+        map_image = pygame.image.load(f"maps/{self.match.map_name}.png")
+        map_x, map_y = self.coordinate_manager.get_top_left(WIDTH, HEIGHT, MAP_SIZE)
+
+        map_image = pygame.transform.scale(map_image, (MAP_SIZE, MAP_SIZE))
+        map_image = pygame.transform.rotate(map_image, 270)
+        self.screen.blit(map_image, (map_x, map_y))
 
         # Draw current tick
         text = self.font.render(f"Tick: {self.match.tick}/{self.match.max_tick}", True, (255, 255, 255))
         self.screen.blit(text, (10, 10))
 
+        # Draw current round
+        text = self.font.render(f"Round: {self.match.round}", True, (255, 255, 255))
+        self.screen.blit(text, (10, 50))
+
         for player in self.match.players:
             if player.dead:
                 continue
-            mapped_x = mapped_value(player.x, -4000, 4000, 0, WIDTH)
-            mapped_y = mapped_value(player.y, -4000, 4000, 0, HEIGHT)
+            mapped_x, mapped_y = self.coordinate_manager.coord_to_pixel(player.x, player.y)
             pygame.draw.circle(self.screen, (255, 255, 255), (mapped_x, mapped_y), 5)
 
             # Draw player name
@@ -65,7 +78,7 @@ if __name__ == "__main__":
     import demoparser2
 
     demo_parser = demoparser2.DemoParser("demo.dem")
-    game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid"])
+    game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid", "team_rounds_total"])
     header_info = demo_parser.parse_header()
     map_name = header_info['map_name']
     players = demo_parser.parse_player_info()
