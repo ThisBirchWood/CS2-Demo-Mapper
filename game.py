@@ -1,10 +1,16 @@
 import pygame
 from match import Match
 from player import Player
-from coordinate_manager import CoordinateManager
+from map_coord_controller import MapCoordController
+from image_coord_controller import ImageCoordController
+from json_object import JSONObject
+from utils import mapped_value
 
-WIDTH, HEIGHT = 800, 800
-MAP_SIZE = 700
+WIDTH, HEIGHT = 700, 700
+MAP_WIDTH, MAP_HEIGHT = 1024,1024
+MAP_MIDDLE_X, MAP_MIDDLE_Y = 650, 320
+MAP_SCALE = 0.6
+MAP_ROTATION = 270
 FPS = 60
 
 class Game:
@@ -20,7 +26,24 @@ class Game:
         self.running = True
 
         self.match = match
-        self.coordinate_manager = CoordinateManager(WIDTH, HEIGHT)
+
+        try:
+            self.json_object = JSONObject(f"maps/{match.map_name}.json")
+        except FileNotFoundError:
+            raise NotImplementedError(f"Map {match.map_name} not implemented.")
+        
+        self.image_path = self.json_object.get("image_path")
+        self.image_width = self.json_object.get("image_width")
+        self.image_height = self.json_object.get("image_height")
+        self.ingame_zero_x = self.json_object.get("middle_x")
+        self.ingame_zero_y = self.json_object.get("middle_y")
+        self.rotation_degrees = self.json_object.get("rotation")
+        self.scaler = self.json_object.get("scale")
+    
+        self.map_coord_controller = MapCoordController(WIDTH, HEIGHT, -3000, 3000, -3000, 3000)
+        self.image_coord_controller = ImageCoordController(self.image_width, self.image_height, WIDTH, HEIGHT, self.ingame_zero_x, self.ingame_zero_y)
+        self.image_coord_controller.scale(self.scaler)
+        self.image_coord_controller.rotate(self.rotation_degrees)
 
     def handle_events(self):
         """Handles user inputs."""
@@ -37,12 +60,14 @@ class Game:
         self.screen.fill((30, 30, 30))  # Clear screen
         
         # Draw map from image
-        map_image = pygame.image.load(f"maps/{self.match.map_name}.png")
-        map_x, map_y = self.coordinate_manager.get_top_left(WIDTH, HEIGHT, MAP_SIZE)
+        map_image = pygame.image.load(self.image_path)
 
-        map_image = pygame.transform.scale(map_image, (MAP_SIZE, MAP_SIZE))
-        map_image = pygame.transform.rotate(map_image, 270)
-        self.screen.blit(map_image, (map_x, map_y))
+        # Scale and rotate map image
+        map_image = pygame.transform.scale(map_image, (self.image_width*self.scaler, self.image_height*self.scaler))
+        map_image = pygame.transform.rotate(map_image, self.rotation_degrees)
+
+        # Draw map image
+        self.screen.blit(map_image, self.image_coord_controller.top_left_screen())
 
         # Draw current tick
         text = self.font.render(f"Tick: {self.match.tick}/{self.match.max_tick}", True, (255, 255, 255))
@@ -55,7 +80,7 @@ class Game:
         for player in self.match.players:
             if player.dead:
                 continue
-            mapped_x, mapped_y = self.coordinate_manager.coord_to_pixel(player.x, player.y)
+            mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
             pygame.draw.circle(self.screen, (255, 255, 255), (mapped_x, mapped_y), 5)
 
             # Draw player name
