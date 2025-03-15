@@ -1,4 +1,4 @@
-from utils import mapped_value
+from utils.utils import mapped_value
 import math
 
 class ImageCoordController:

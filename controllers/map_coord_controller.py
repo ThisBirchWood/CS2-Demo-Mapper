@@ -1,7 +1,7 @@
 # Description: This file contains the CoordinateManager class which is responsible for converting coordinates to pixels and vice versa.
 
 import math
-from utils import mapped_value
+from utils.utils import mapped_value
 
 class MapCoordController:
     def __init__(self, screen_width: int, screen_height: int, map_min_x: int, map_max_x, map_min_y, map_max_y):

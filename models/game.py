@@ -1,10 +1,10 @@
 import pygame
-from match import Match
-from player import Player
-from map_coord_controller import MapCoordController
-from image_coord_controller import ImageCoordController
-from json_object import JSONObject
-from utils import mapped_value
+from models.match import Match
+from models.player import Player
+from controllers.map_coord_controller import MapCoordController
+from controllers.image_coord_controller import ImageCoordController
+from utils.json_object import JSONObject
+from utils.utils import mapped_value
 
 WIDTH, HEIGHT = 700, 700
 MAP_WIDTH, MAP_HEIGHT = 1024,1024

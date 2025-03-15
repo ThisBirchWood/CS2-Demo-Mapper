@@ -1,4 +1,4 @@
-from player import Player
+from models.player import Player
 
 class Match:
     def __init__(self, map_name, game_info, tick_rate=64):
