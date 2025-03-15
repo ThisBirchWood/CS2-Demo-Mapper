@@ -1,9 +1,9 @@
 {
-    "map_middle_x": 650,
-    "map_middle_y": 320,
-    "map_scale": 0.6,
-    "map_rotation": 270,
-    "map_image": "de_mirage.png",
-    "map_image_width": 1024,
-    "map_image_height": 1024
+    "middle_x": 650,
+    "middle_y": 320,
+    "scale": 0.6,
+    "rotation": 270,
+    "image_path": "maps/de_mirage.png",
+    "image_width": 1024,
+    "image_height": 1024
 }
