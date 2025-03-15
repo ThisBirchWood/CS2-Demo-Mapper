@@ -7,10 +7,6 @@ from utils.json_object import JSONObject
 from utils.utils import mapped_value
 
 WIDTH, HEIGHT = 700, 700
-MAP_WIDTH, MAP_HEIGHT = 1024,1024
-MAP_MIDDLE_X, MAP_MIDDLE_Y = 650, 320
-MAP_SCALE = 0.6
-MAP_ROTATION = 270
 FPS = 60
 
 class Game:
