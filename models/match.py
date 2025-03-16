@@ -13,8 +13,8 @@ class Match:
 
         self.round = self.current_tick["team_rounds_total"].values[0]
 
-        self.max_tick = game_info.index[-1]
-        self.game_info = game_info # pd dataframe sorted by tick
+        self.max_tick = game_info["tick"].max()
+        self.game_info = game_info.sort_values(by=["tick", "player_steamid"]) # pd dataframe sorted by tick
         self.tick_rate = tick_rate
 
     def _update_player_positions(self) -> None:
@@ -35,7 +35,19 @@ class Match:
     def _update_round(self) -> None:
         if self.current_tick.empty:	
             return
+        
         self.round = self.current_tick["team_rounds_total"].values[0]
+        
+        if self.round >= 8:
+            self.team_1.is_ct = False
+            self.team_2.is_ct = True
+            self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
+            self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == 2]["team_rounds_total"].values[0])
+        else:
+            self.team_1.is_ct = True
+            self.team_2.is_ct = False
+            self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 2]["team_rounds_total"].values[0])
+            self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
 
     def next_tick(self) -> None:
         self.tick += 1
