@@ -70,9 +70,9 @@ class Game:
         text = self.font.render(f"Tick: {self.match.tick}/{self.match.max_tick}", True, (255, 255, 255))
         self.screen.blit(text, (10, 10))
 
-        # Draw current round
-        text = self.font.render(f"Round: {self.match.round}", True, (255, 255, 255))
-        self.screen.blit(text, (10, 50))
+        # Draw team scores
+        text = self.font.render(f"Score: {self.match.team_1.score} - {self.match.team_2.score}", True, (255, 255, 255))
+        self.screen.blit(text, (10, 40))
 
         for player in self.match.get_players():
             if player.dead:
