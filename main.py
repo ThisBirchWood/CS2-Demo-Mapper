@@ -12,11 +12,10 @@ def main():
     map_name = header_info['map_name']
     players = demo_parser.parse_player_info()
 
-    start_tick = int(input())
     team_1 = Team(is_ct=True)
     team_2 = Team()
     m = Match(map_name, game_info, team_1, team_2)
-    m.tick = start_tick
+    m.tick = 1800
     for index, row in players.iterrows():
         if row["team_number"] == 2:
             team_1.add_player(Player(row["name"], row["steamid"]))
