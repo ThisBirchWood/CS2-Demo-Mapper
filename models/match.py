@@ -11,7 +11,7 @@ class Match:
         self.tick = 1
         self.current_tick = game_info[game_info["tick"] == self.tick]
 
-        self.round = self.current_tick["team_rounds_total"].values[0]
+        self.round = self.current_tick["total_rounds_played"].values[0]
 
         self.max_tick = game_info["tick"].max()
         self.game_info = game_info.sort_values(by=["tick", "player_steamid"]) # pd dataframe sorted by tick
@@ -36,7 +36,7 @@ class Match:
         if self.current_tick.empty:	
             return
         
-        self.round = self.current_tick["team_rounds_total"].values[0]
+        self.round = self.current_tick["total_rounds_played"].values[0]
         
         if self.round >= 8:
             self.team_1.set_t()
