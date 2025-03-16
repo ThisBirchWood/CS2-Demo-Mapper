@@ -14,6 +14,10 @@ class MapCoordController:
         self.map_width = map_max_x - map_min_x
         self.map_height = map_max_y - map_min_y
 
+    def update_screen_size(self, screen_width: int, screen_height: int):
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+
     def screen_to_map(self, x, y):
         mapped_x = mapped_value(x, 0, self.screen_width, self.map_min_x, self.map_max_x)
         mapped_y = mapped_value(y, 0, self.screen_height, self.map_min_y, self.map_max_y)

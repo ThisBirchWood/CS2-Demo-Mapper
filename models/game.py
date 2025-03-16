@@ -10,7 +10,7 @@ FPS = 60
 class Game:
     def __init__(self, match: Match):
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.font = pygame.font.Font(None, 36)
         self.small_font = pygame.font.Font(None, 15)
 

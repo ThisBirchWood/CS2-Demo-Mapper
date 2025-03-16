@@ -37,6 +37,7 @@ class Renderer:
                                                        self.top_left_x, self.bottom_right_x, self.top_left_y, self.bottom_right_y)
     def render_players(self):
         """Draws everything on screen."""
+        self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
         for player in self.match.get_players():
             if player.dead:
                 continue
