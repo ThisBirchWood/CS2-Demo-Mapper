@@ -39,13 +39,13 @@ class Match:
         self.round = self.current_tick["team_rounds_total"].values[0]
         
         if self.round >= 8:
-            self.team_1.is_ct = False
-            self.team_2.is_ct = True
+            self.team_1.set_t()
+            self.team_2.set_ct()
             self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
             self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == 2]["team_rounds_total"].values[0])
         else:
-            self.team_1.is_ct = True
-            self.team_2.is_ct = False
+            self.team_1.set_ct()
+            self.team_2.set_t()
             self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 2]["team_rounds_total"].values[0])
             self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
 
@@ -57,3 +57,6 @@ class Match:
 
     def get_players(self) -> list[Player]:
         return self.team_1.players + self.team_2.players
+    
+    def get_teams(self) -> list[Team]:
+        return [self.team_1, self.team_2]

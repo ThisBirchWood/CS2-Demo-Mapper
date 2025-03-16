@@ -38,15 +38,17 @@ class Renderer:
     def render_players(self):
         """Draws everything on screen."""
         self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
-        for player in self.match.get_players():
-            if player.dead:
-                continue
-            mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
-            pygame.draw.circle(self.screen, (255, 255, 255), (mapped_x, mapped_y), 5)
 
-            # Draw player name
-            text = self.small_font.render(player.name, True, (255, 255, 255))
-            self.screen.blit(text, (mapped_x + 10, mapped_y))
+        for team in self.match.get_teams():
+            for player in team.players:
+                if player.dead:
+                    continue
+                mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
+                pygame.draw.circle(self.screen, team.colour, (mapped_x, mapped_y), 5)
+
+                # Draw player name
+                text = self.small_font.render(player.name, True, (255, 255, 255))
+                self.screen.blit(text, (mapped_x + 10, mapped_y))
 
         pygame.display.flip()  # Update display
 
