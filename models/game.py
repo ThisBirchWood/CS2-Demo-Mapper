@@ -1,6 +1,7 @@
 import pygame
 from models.match import Match
 from models.player import Player
+from models.team import Team
 from controllers.map_coord_controller import MapCoordController
 from controllers.image_coord_controller import ImageCoordController
 from utils.json_object import JSONObject
@@ -73,7 +74,7 @@ class Game:
         text = self.font.render(f"Round: {self.match.round}", True, (255, 255, 255))
         self.screen.blit(text, (10, 50))
 
-        for player in self.match.players:
+        for player in self.match.get_players():
             if player.dead:
                 continue
             mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
@@ -105,10 +106,15 @@ if __name__ == "__main__":
     players = demo_parser.parse_player_info()
 
     start_tick = int(input())
-    m = Match(map_name, game_info)
+    team_1 = Team()
+    team_2 = Team()
+    m = Match(map_name, game_info, team_1, team_2)
     m.tick = start_tick
     for index, row in players.iterrows():
-        m.add_player(Player(row["name"], row["steamid"]))
+        if row["team_number"] == 1:
+            team_1.add_player(Player(row["name"], row["steamid"]))
+        else: 
+            team_2.add_player(Player(row["name"], row["steamid"]))
 
     game = Game(m)
     

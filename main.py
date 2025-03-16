@@ -1,6 +1,7 @@
 from models.game import Game
 from models.match import Match
 from models.player import Player
+from models.team import Team
 
 def main():
     import demoparser2
@@ -12,10 +13,15 @@ def main():
     players = demo_parser.parse_player_info()
 
     start_tick = int(input())
-    m = Match(map_name, game_info)
+    team_1 = Team()
+    team_2 = Team()
+    m = Match(map_name, game_info, team_1, team_2)
     m.tick = start_tick
     for index, row in players.iterrows():
-        m.add_player(Player(row["name"], row["steamid"]))
+        if row["team_number"] == 1:
+            team_1.add_player(Player(row["name"], row["steamid"]))
+        else: 
+            team_2.add_player(Player(row["name"], row["steamid"]))
 
     game = Game(m)
     
