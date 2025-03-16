@@ -5,7 +5,6 @@ from models.match import Match
 from models.player import Player
 from models.team import Team
 from controllers.map_coord_controller import MapCoordController
-from controllers.image_coord_controller import ImageCoordController
 from utils.json_object import JSONObject
 
 class Renderer:
@@ -20,23 +19,22 @@ class Renderer:
         except FileNotFoundError:
             raise NotImplementedError(f"Map {match.map_name} not implemented.")
         
-        self.image_path = self.json_object.get("image_path")
-        self.image_path = self.json_object.get("image_path")
-        self.image_width = self.json_object.get("image_width")
-        self.image_height = self.json_object.get("image_height")
-        self.ingame_zero_x = self.json_object.get("middle_x")
-        self.ingame_zero_y = self.json_object.get("middle_y")
-        self.rotation_degrees = self.json_object.get("rotation")
-        self.scaler = self.json_object.get("scale")
+        self.top_left_x = self.json_object.get("pos_x")
+        self.top_left_y = self.json_object.get("pos_y")
+        self.scale = self.json_object.get("scale")
+        self.rotation = self.json_object.get("rotate")
+        self.image_path = self.json_object.get("material")
+
+        self.map_image = pygame.image.load(self.image_path)
+        self.image_width = self.map_image.get_width()
+        self.image_height = self.map_image.get_height()
+
+        self.bottom_right_x = self.top_left_x + (self.image_width * self.scale)
+        self.bottom_right_y = self.top_left_y - (self.image_height * self.scale)
+        
     
         self.map_coord_controller = MapCoordController(self.screen.get_width(), self.screen.get_height(), 
-                                                       -3000, 3000, -3000, 3000)
-        self.image_coord_controller = ImageCoordController(self.image_width, self.image_height,
-                                                           self.screen.get_width(), self.screen.get_height(), 
-                                                           self.ingame_zero_x, self.ingame_zero_y)
-        self.image_coord_controller.scale(self.scaler)
-        self.image_coord_controller.rotate(self.rotation_degrees)
-
+                                                       self.top_left_x, self.bottom_right_x, self.top_left_y, self.bottom_right_y)
     def render_players(self):
         """Draws everything on screen."""
         for player in self.match.get_players():
@@ -61,15 +59,11 @@ class Renderer:
         self.screen.blit(text, (10, 40))
 
     def render_map(self):
-        # Draw map from image
-        map_image = pygame.image.load(self.image_path)
-
         # Scale and rotate map image
-        map_image = pygame.transform.scale(map_image, (self.image_width*self.scaler, self.image_height*self.scaler))
-        map_image = pygame.transform.rotate(map_image, self.rotation_degrees)
+        self.map_image = pygame.transform.scale(self.map_image, (self.screen.get_width(), self.screen.get_height()))
 
         # Draw map image
-        self.screen.blit(map_image, self.image_coord_controller.top_left_screen())
+        self.screen.blit(self.map_image, (0, 0))
 
     '''
         def render_slider(self):

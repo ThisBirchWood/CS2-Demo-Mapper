@@ -4,7 +4,7 @@ from models.player import Player
 from models.team import Team
 from models.renderer import Renderer
 
-WIDTH, HEIGHT = 700, 700
+WIDTH, HEIGHT = 700,700
 FPS = 60
 
 class Game:

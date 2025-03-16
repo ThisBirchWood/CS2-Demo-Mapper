@@ -25,8 +25,8 @@ class Match:
             return
 
         for player in self.get_players():
-            player.x = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Y"].values[0]
-            player.y = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["X"].values[0]
+            player.x = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["X"].values[0]
+            player.y = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Y"].values[0]
             player.z = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Z"].values[0]
             player.pitch = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["pitch"].values[0]
             player.yaw = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["yaw"].values[0]
