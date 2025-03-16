@@ -11,6 +11,6 @@ CS2 Demo Mapper is a tool that takes a Counter-Strike 2 (CS2) demo file and visu
 - Round controls: Easily navigate between rounds and key moments in a match.
 - Frontline visualization: Highlight contested areas and team-controlled regions.
 - Expanded map support: More official CS2 maps will be added.
-- Yaw & pitch options: Allow adjusting camera angles for better analysis.
+- Yaw & pitch options: Visualize where a player is looking for better analysis.
 
 This tool is useful for match review, strategic planning, and performance analysis. More features will be added to improve the clarity and depth of demo analysis!
