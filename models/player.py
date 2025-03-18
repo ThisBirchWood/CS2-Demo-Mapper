@@ -9,5 +9,6 @@ class Player:
         self.pitch = pitch
         self.yaw = yaw # Probably only need this if top-down
         self.dead = False
+        self.is_shooting = False
 
     

@@ -31,6 +31,7 @@ class Match:
             player.pitch = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["pitch"].values[0]
             player.yaw = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["yaw"].values[0]
             player.dead = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["is_alive"].values[0] == 0
+            player.is_shooting = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["shots_fired"].values[0]
 
     def _update_round(self) -> None:
         if self.current_tick.empty:	

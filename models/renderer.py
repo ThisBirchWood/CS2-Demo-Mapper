@@ -95,11 +95,13 @@ class Renderer:
         self.screen.blit(text, (mapped_x-10, mapped_y-15))
 
     def _render_player_yaw(self, player: Player, team: Team):
-        mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
-        player_yaw = math.radians(player.yaw)
-        end_x = mapped_x + (20 * math.cos(player_yaw))
-        end_y = mapped_y - (20 * math.sin(player_yaw))
-        pygame.draw.line(self.screen, team.colour, (mapped_x, mapped_y), (end_x, end_y), 2)
+        if player.is_shooting:
+
+            mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
+            player_yaw = math.radians(player.yaw)
+            end_x = mapped_x + (100 * math.cos(player_yaw))
+            end_y = mapped_y - (100 * math.sin(player_yaw))
+            pygame.draw.line(self.screen, team.colour, (mapped_x, mapped_y), (end_x, end_y), 2)
 
     def render(self):
         self.screen.fill((30, 30, 30))  # Clear screen
