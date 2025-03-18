@@ -18,6 +18,9 @@ class HorizontalSlider:
         self.knob_x = self.x
         self.dragging = False
 
+        self.fill = False
+        self.fill_colour = (128, 128, 0)
+
     def handle_event(self, event):
         """Handle mouse events for dragging"""
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -35,7 +38,11 @@ class HorizontalSlider:
         """
         Draw the slider on the screen
         """
-        pygame.draw.rect(self.screen, self.background_colour, (self.x, self.y, self.width, self.height))
+        if self.fill:
+            pygame.draw.rect(self.screen, self.fill_colour, (self.x, self.y, self.knob_x, self.height))
+            pygame.draw.rect(self.screen, self.background_colour, (self.knob_x, self.y, self.width - (self.knob_x - self.x), self.height))
+        else:
+            pygame.draw.rect(self.screen, self.background_colour, (self.x, self.y, self.width, self.height))
         pygame.draw.circle(self.screen, self.knob_colour, (int(self.knob_x), self.y + self.height // 2), self.knob_radius)
 
     def set_value(self, value):
