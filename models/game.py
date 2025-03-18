@@ -28,6 +28,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            self.renderer.slider.handle_event(event)
 
     def update(self):
         """Updates game objects."""
