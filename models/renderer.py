@@ -106,3 +106,4 @@ class Renderer:
         self.render_map()
         self.render_text()
         self.render_players()
+        self.render_slider()
