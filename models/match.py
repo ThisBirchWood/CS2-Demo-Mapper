@@ -38,7 +38,7 @@ class Match:
         
         self.round = self.current_tick["total_rounds_played"].values[0]
         
-        if self.round >= 8:
+        if self.round >= 12:
             self.team_1.set_t()
             self.team_2.set_ct()
             self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
