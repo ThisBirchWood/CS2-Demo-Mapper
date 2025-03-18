@@ -55,6 +55,12 @@ class Match:
         self._update_player_positions()
         self._update_round()
 
+    def set_tick(self, tick: int) -> None:
+        self.tick = tick
+        self.current_tick = self.game_info[self.game_info["tick"] == self.tick]
+        self._update_player_positions()
+        self._update_round()
+
     def get_players(self) -> list[Player]:
         return self.team_1.players + self.team_2.players
     
