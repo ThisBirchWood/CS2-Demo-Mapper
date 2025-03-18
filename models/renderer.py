@@ -14,21 +14,25 @@ class Renderer:
         self.font = pygame.font.Font(None, 36)
         self.small_font = pygame.font.Font(None, 15)
 
+        # Load map data from json file
         try:
             self.json_object = JSONObject(f"maps/{match.map_name}.json")
         except FileNotFoundError:
             raise NotImplementedError(f"Map {match.map_name} not implemented.")
         
+        # Load map data from json object
         self.top_left_x = self.json_object.get("pos_x")
         self.top_left_y = self.json_object.get("pos_y")
         self.scale = self.json_object.get("scale")
         self.rotation = self.json_object.get("rotate")
         self.image_path = self.json_object.get("material")
 
+        # Load map image
         self.map_image = pygame.image.load(self.image_path)
         self.image_width = self.map_image.get_width()
         self.image_height = self.map_image.get_height()
 
+        # Calculate bottom right coordinates for map coord controller
         self.bottom_right_x = self.top_left_x + (self.image_width * self.scale)
         self.bottom_right_y = self.top_left_y - (self.image_height * self.scale)
         
@@ -40,12 +44,16 @@ class Renderer:
 
     def render_players(self):
         """Draws everything on screen."""
+        # Update screen size if it has changed
         self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
 
+        # loop through the teams and each of their players
         for team in self.match.get_teams():
             for player in team.players:
+                # Draw player if they are alive
                 if player.dead:
                     continue
+                # Map player coordinates to screen coordinates
                 mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
                 pygame.draw.circle(self.screen, team.colour, (mapped_x, mapped_y), 5)
 
@@ -70,10 +78,12 @@ class Renderer:
         self.screen.blit(self.map_image, (0, 0))
 
     def render_slider(self):
-        # Create slider
+        # Update slider value
         if self.slider.dragging:
+            # Set match tick if slider is being dragged
             self.match.set_tick(int(self.slider.value))
         else:
+            # Set slider value if slider is not being dragged
             self.slider.set_value(self.match.tick)
         self.slider.draw()
 

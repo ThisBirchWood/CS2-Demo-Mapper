@@ -32,10 +32,17 @@ class HorizontalSlider:
                 self.value = self.min_value + ((self.max_value - self.min_value) * ((self.knob_x - self.x) / self.width))
 
     def draw(self):
+        """
+        Draw the slider on the screen
+        """
         pygame.draw.rect(self.screen, self.background_colour, (self.x, self.y, self.width, self.height))
         pygame.draw.circle(self.screen, self.knob_colour, (int(self.knob_x), self.y + self.height // 2), self.knob_radius)
 
     def set_value(self, value):
+        """
+        Set the value of the slider
+        Caps the value to the min and max values
+        """
         self.value = int(value)
         if value < self.min_value:
             self.value = self.min_value
