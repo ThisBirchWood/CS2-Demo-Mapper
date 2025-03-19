@@ -44,15 +44,6 @@ class Renderer:
         self.player_render = PlayerRenderer(self.screen, self.match, self.map_coord_controller, self.small_font)
         self.text_render = TextRenderer(self.screen, self.match)
 
-    def render_text(self):
-        # Draw current tick
-        text = self.font.render(f"Tick: {self.match.tick}/{self.match.max_tick}", True, (255, 255, 255))
-        self.screen.blit(text, (10, 10))
-
-        # Draw team scores
-        text = self.font.render(f"Score: {self.match.team_1.score} - {self.match.team_2.score}", True, (255, 255, 255))
-        self.screen.blit(text, (10, 40))
-
     def render_map(self):
         # Scale and rotate map image
         self.map_image = pygame.transform.scale(self.map_image, (self.screen.get_width(), self.screen.get_height()))
