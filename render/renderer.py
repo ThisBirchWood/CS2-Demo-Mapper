@@ -1,11 +1,8 @@
-import math
 import pygame
 from widgets.slider import HorizontalSlider
-from pygame_widgets.slider import Slider
 from models.match import Match
-from models.player import Player
-from models.team import Team
 from controllers.map_coord_controller import MapCoordController
+from render.player_render import PlayerRender
 from utils.json_object import JSONObject
 
 class Renderer:
@@ -42,25 +39,8 @@ class Renderer:
                                                        self.top_left_x, self.bottom_right_x, self.top_left_y, self.bottom_right_y)
         
         self.slider = HorizontalSlider(self.screen, 50, 650, self.screen.get_width()-100, 20, 1, self.match.max_tick)
-        #self.slider.fill = True
 
-    def render_players(self):
-        """Draws everything on screen."""
-        # Update screen size if it has changed
-        self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
-
-        # loop through the teams and each of their players
-        for team in self.match.get_teams():
-            for player in team.players:
-                # Draw player if they are alive
-                if player.dead:
-                    continue
-                
-                self._render_player(player, team)
-                self._render_player_yaw(player, team)
-
-    #def render_player_path(self):
-
+        self.player_render = PlayerRender(self.screen, self.match, self.map_coord_controller, self.small_font)
 
     def render_text(self):
         # Draw current tick
@@ -88,24 +68,10 @@ class Renderer:
             self.slider.set_value(self.match.tick)
         self.slider.draw()
 
-    def _render_player(self, player: Player, team: Team):
-        mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
-        pygame.draw.circle(self.screen, team.colour, (mapped_x, mapped_y), 5)
-        text = self.small_font.render(player.name, True, (255, 255, 255))
-        self.screen.blit(text, (mapped_x-10, mapped_y-15))
-
-    def _render_player_yaw(self, player: Player, team: Team):
-        if player.is_shooting:
-
-            mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
-            player_yaw = math.radians(player.yaw)
-            end_x = mapped_x + (100 * math.cos(player_yaw))
-            end_y = mapped_y - (100 * math.sin(player_yaw))
-            pygame.draw.line(self.screen, team.colour, (mapped_x, mapped_y), (end_x, end_y), 2)
-
     def render(self):
         self.screen.fill((30, 30, 30))  # Clear screen
+        self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
+        self.render_slider()
         self.render_map()
         self.render_text()
-        self.render_players()
-        self.render_slider()
+        self.player_render.render()

@@ -5,9 +5,10 @@ class Player:
         self.x = x
         self.y = y
         self.z = z
-
         self.pitch = pitch
         self.yaw = yaw # Probably only need this if top-down
+
+        self.health = 100
         self.dead = False
         self.is_shooting = False
 
