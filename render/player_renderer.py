@@ -2,7 +2,7 @@ import pygame, math
 from models.match import Match
 from utils.utils import mapped_value
 
-class PlayerRender:
+class PlayerRenderer:
     def __init__(self, screen, match: Match, map_coord_controller, player_font):
         self.screen = screen
         self.match = match
@@ -35,7 +35,6 @@ class PlayerRender:
         x, y = self.map_coord_controller.map_to_screen(player.x, player.y)
         pygame.draw.rect(self.screen, self.health_bar_background, (x-10, y-10, 20, 5))
         pygame.draw.rect(self.screen, self.health_bar_foreground, (x-10, y-10, mapped_value(player.health, 0, 100, 0, 20), 5))
-     
 
     def render(self):
         for team in self.match.get_teams():

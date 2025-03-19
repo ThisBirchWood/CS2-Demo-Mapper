@@ -2,7 +2,8 @@ import pygame
 from widgets.slider import HorizontalSlider
 from models.match import Match
 from controllers.map_coord_controller import MapCoordController
-from render.player_render import PlayerRender
+from render.player_renderer import PlayerRenderer
+from render.text_renderer import TextRenderer
 from utils.json_object import JSONObject
 
 class Renderer:
@@ -40,7 +41,8 @@ class Renderer:
         
         self.slider = HorizontalSlider(self.screen, 50, 650, self.screen.get_width()-100, 20, 1, self.match.max_tick)
 
-        self.player_render = PlayerRender(self.screen, self.match, self.map_coord_controller, self.small_font)
+        self.player_render = PlayerRenderer(self.screen, self.match, self.map_coord_controller, self.small_font)
+        self.text_render = TextRenderer(self.screen, self.match)
 
     def render_text(self):
         # Draw current tick
@@ -73,5 +75,5 @@ class Renderer:
         self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
         self.render_slider()
         self.render_map()
-        self.render_text()
+        self.text_render.render()
         self.player_render.render()
