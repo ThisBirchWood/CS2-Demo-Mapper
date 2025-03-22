@@ -19,13 +19,13 @@ class MapCoordController:
         self.screen_height = screen_height
 
     def screen_to_map(self, x, y):
-        mapped_x = mapped_value(x, 0, self.screen_width, self.map_min_x, self.map_max_x)
-        mapped_y = mapped_value(y, 0, self.screen_height, self.map_min_y, self.map_max_y)
+        mapped_x = int(mapped_value(x, 0, self.screen_width, self.map_min_x, self.map_max_x))
+        mapped_y = int(mapped_value(y, 0, self.screen_height, self.map_min_y, self.map_max_y))
         return mapped_x, mapped_y
     
     def map_to_screen(self, x, y):
-        mapped_x = mapped_value(x, self.map_min_x, self.map_max_x, 0, self.screen_width)
-        mapped_y = mapped_value(y, self.map_min_y, self.map_max_y, 0, self.screen_height)
+        mapped_x = int(mapped_value(x, self.map_min_x, self.map_max_x, 0, self.screen_width))
+        mapped_y = int(mapped_value(y, self.map_min_y, self.map_max_y, 0, self.screen_height))
         return mapped_x, mapped_y
     
 if __name__ == "__main__":
