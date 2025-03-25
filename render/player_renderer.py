@@ -25,11 +25,15 @@ class PlayerRenderer:
 
     def _render_yaw(self, player, team):
         if player.is_shooting:
-            mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
-            player_yaw = math.radians(player.yaw)
-            end_x = mapped_x + (100 * math.cos(player_yaw))
-            end_y = mapped_y - (100 * math.sin(player_yaw))
-            pygame.draw.line(self.screen, team.colour, (mapped_x, mapped_y), (end_x, end_y), 2)
+            yaw_length = 100
+        else:
+            yaw_length = 20
+
+        mapped_x, mapped_y = self.map_coord_controller.map_to_screen(player.x, player.y)
+        player_yaw = math.radians(player.yaw)
+        end_x = mapped_x + (yaw_length * math.cos(player_yaw))
+        end_y = mapped_y - (yaw_length * math.sin(player_yaw))
+        pygame.draw.line(self.screen, team.colour, (mapped_x, mapped_y), (end_x, end_y), 2)
 
     def _render_health(self, player):
         x, y = self.map_coord_controller.map_to_screen(player.x, player.y)
