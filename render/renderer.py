@@ -40,7 +40,6 @@ class Renderer:
                                                        self.top_left_x, self.bottom_right_x, self.top_left_y, self.bottom_right_y)
         
         self.slider = HorizontalSlider(self.screen, 50, 650, self.screen.get_width()-100, 20, 1, self.match.max_tick)
-
         self.player_render = PlayerRenderer(self.screen, self.match, self.map_coord_controller, self.small_font)
         self.text_render = TextRenderer(self.screen, self.match)
 
@@ -64,7 +63,7 @@ class Renderer:
     def render(self):
         self.screen.fill((30, 30, 30))  # Clear screen
         self.map_coord_controller.update_screen_size(self.screen.get_width(), self.screen.get_height())
-        self.render_slider()
         self.render_map()
         self.text_render.render()
+        self.render_slider()
         self.player_render.render()

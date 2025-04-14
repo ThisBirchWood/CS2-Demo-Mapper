@@ -6,7 +6,7 @@ from models.team import Team
 def main():
     import demoparser2
 
-    demo_parser = demoparser2.DemoParser("the-mongolz-vs-natus-vincere-m2-inferno.dem")
+    demo_parser = demoparser2.DemoParser("the-mongolz-vs-natus-vincere-m1-dust2.dem")
     game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid", 
                                          "team_rounds_total", "team_num", "total_rounds_played", "shots_fired",
                                          "health"])
