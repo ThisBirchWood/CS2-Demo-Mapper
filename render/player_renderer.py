@@ -1,9 +1,10 @@
 import pygame, math
 from models.match import Match
+from controllers.map_coord_controller import MapCoordController
 from utils.utils import mapped_value
 
 class PlayerRenderer:
-    def __init__(self, screen, match: Match, map_coord_controller, player_font):
+    def __init__(self, screen, match: Match, map_coord_controller: MapCoordController, player_font):
         self.screen = screen
         self.match = match
         self.map_coord_controller = map_coord_controller
@@ -14,6 +15,27 @@ class PlayerRenderer:
         self.health_bar_foreground = (0, 255, 0)
         self.health_bar_background = (255, 0, 0)
 
+    ## Getters 
+    def get_radius(self) -> int:
+        return self.player_radius
+    
+    def get_health_bar_foreground_colour(self) -> tuple[int, int, int]:
+        return self.health_bar_foreground
+    
+    def get_health_bar_background_colour(self) -> tuple[int, int, int]:
+        return self.health_bar_background
+    
+    ## Setters
+    def set_radius(self, radius: int) -> None:
+        self.player_radius = radius
+
+    def set_health_bar_foreground_colour(self, colour: tuple[int, int, int]):
+        self.health_bar_foreground = colour
+
+    def set_health_bar_background_colour(self, colour: tuple[int, int, int]):
+        self.health_bar_background = colour
+
+    ## Private Methods
     def _render_circle(self, player, team):
         x, y = self.map_coord_controller.map_to_screen(player.x, player.y)
         pygame.draw.circle(self.screen, team.colour, (x, y), self.player_radius)
@@ -40,6 +62,7 @@ class PlayerRenderer:
         pygame.draw.rect(self.screen, self.health_bar_background, (x-10, y-10, 20, 5))
         pygame.draw.rect(self.screen, self.health_bar_foreground, (x-10, y-10, mapped_value(player.health, 0, 100, 0, 20), 5))
 
+    ## Public Methods
     def render(self):
         for team in self.match.get_teams():
             for player in team.players:
