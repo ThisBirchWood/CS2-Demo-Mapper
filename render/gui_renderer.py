@@ -1,6 +1,6 @@
 import pygame
 
-class TextRenderer:
+class GUIRenderer:
     def __init__(self, screen, match):
         self.screen = screen
         self.font = pygame.font.Font(None, 36)
