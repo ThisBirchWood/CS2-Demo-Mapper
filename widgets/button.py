@@ -1,50 +1,93 @@
 import pygame
 
 class Button:
-    def __init__(self, screen, x, y, width, height, image_path, colour, action):
+    def __init__(self, screen, x, y, width, height, action):
         self.screen = screen
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self._load_image(image_path)
-        self.colour = colour
+
+        self.image = None
+        self.text = None
         self.action = action
 
-        self.active = False
+        ## Default values
+        self.font_size = 20
+        self.colour = (255, 255, 255)
+        self.pressed = False
 
-    def _load_image(self, image_path):
+    ## Getters and setters
+    def get_font_size(self) -> int:
+        return self.font_size
+    
+    def get_text(self) -> str:
+        return self.text
+    
+    def set_font_size(self, font_size: int) -> None:
+        self.font_size = font_size
+
+    def set_text(self, text: str) -> None:
+        self.text = text
+
+    def set_image(self, image_path: str) -> None: 
+        self._load_image(image_path)
+
+    def set_action(self, action) -> None:
+        self.action = action
+
+    ## Private methods
+    def _load_image(self, image_path: str) -> None:
         self.image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
-    def handle_event(self, event):
+    def _draw_text(self, text: str, font_size: int) -> None:
+        font = pygame.font.Font(None, font_size)
+        text_surface = font.render(text, True, (0, 0, 0))
+        text_rect = text_surface.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
+        self.screen.blit(text_surface, text_rect)
+
+    def _button_press_down(self) -> None:
+        self.pressed = True
+        if self.action:
+            self.action()
+
+    def _button_press_up(self) -> None:
+        self.pressed = False
+        pass
+
+    ## Public methods
+    def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.x <= event.pos[0] <= self.x + self.width and self.y <= event.pos[1] <= self.y + self.height:
-                self.active = not self.active
-                self.action()
+                self._button_press_down()
+        
+        if self.pressed and event.type == pygame.MOUSEBUTTONUP:
+                self._button_press_up()
 
-    def draw(self):
-        pygame.draw.rect(self.screen, self.colour, (self.x, self.y, self.width, self.height))
-        self.screen.blit(self.image, (self.x, self.y))
+    def draw(self) -> None:
+        if self.pressed:
+            pygame.draw.rect(self.screen, (200, 200, 200), (self.x, self.y, self.width, self.height))
+        else:
+            pygame.draw.rect(self.screen, self.colour, (self.x, self.y, self.width, self.height))
 
-    def set_image(self, image_path: str):
-        self._load_image(image_path)
+        if self.image:
+            self.screen.blit(self.image, (self.x, self.y))
 
-    def set_action(self, action):
-        self.action = action
-
+        if self.text:
+            self._draw_text(self.text, self.font_size)
+            
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((700, 700))
 
-    def play_pause(button):
-        if button.active:
-            button.set_image("../assets/pause-button.png")
-        else:
-            button.set_image("../assets/play-button.png")
+    def button_action():
+        print("Button clicked!")
 
-
-    button = Button(screen, 100, 100, 100, 100, "../assets/play-button.png", (255, 0, 0), lambda: play_pause(button))
+    button = Button(screen, 100, 100, 200, 50, button_action)
+    button.set_text("Click Me")
+    button.set_font_size(30)
+    #button.set_image("assets/play-button.png")  # Replace with your image path
 
     running = True
     while running:
