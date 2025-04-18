@@ -3,6 +3,7 @@ from models.match import Match
 from models.player import Player
 from models.team import Team
 from render.renderer import Renderer
+from controllers.player_controller import PlayerController
 
 WIDTH, HEIGHT = 700,700
 FPS = 60
@@ -21,6 +22,7 @@ class Game:
 
         self.match = match
         self.renderer = Renderer(self.match, self.screen)
+        self.player_controller = PlayerController(self.renderer.player_render, self.match)
         
     def handle_events(self):
         """Handles user inputs."""
@@ -28,6 +30,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             self.renderer.slider.handle_event(event)
+            self.player_controller.update(event)
 
     def update(self):
         """Updates game objects."""

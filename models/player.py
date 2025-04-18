@@ -12,4 +12,8 @@ class Player:
         self.dead = False
         self.is_shooting = False
 
+        ## UI-related state
+        self.is_selected = False
+        self.is_hovered = False
+
     

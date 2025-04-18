@@ -1,5 +1,6 @@
 import pygame, math
 from models.match import Match
+from models.player import Player
 from controllers.map_coord_controller import MapCoordController
 from utils.utils import mapped_value
 
@@ -11,6 +12,7 @@ class PlayerRenderer:
         self.player_font = player_font
 
         self.player_radius = 5
+        self.hovered_radius = 10
 
         self.health_bar_foreground = (0, 255, 0)
         self.health_bar_background = (255, 0, 0)
@@ -36,9 +38,14 @@ class PlayerRenderer:
         self.health_bar_background = colour
 
     ## Private Methods
-    def _render_circle(self, player, team):
+    def _render_circle(self, player: Player, team):
+        if player.is_hovered:
+            radius = self.hovered_radius
+        else:
+            radius = self.player_radius
+
         x, y = self.map_coord_controller.map_to_screen(player.x, player.y)
-        pygame.draw.circle(self.screen, team.colour, (x, y), self.player_radius)
+        pygame.draw.circle(self.screen, team.colour, (x, y), radius)
 
     def _render_text(self, player):
         x, y = self.map_coord_controller.map_to_screen(player.x, player.y)
