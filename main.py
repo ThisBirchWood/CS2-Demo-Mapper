@@ -1,31 +1,44 @@
-from models.game import Game
-from models.match import Match
-from models.player import Player
-from models.team import Team
+import pygame
+from states.game import Game
+from states.start_menu import StartMenu
+
 
 def main():
-    import demoparser2
+    pygame.init()
+    screen = pygame.display.set_mode((720, 720))
+    clock = pygame.time.Clock()
 
-    demo_parser = demoparser2.DemoParser("the-mongolz-vs-natus-vincere-m1-dust2.dem")
-    game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid", 
-                                         "team_rounds_total", "team_num", "total_rounds_played", "shots_fired",
-                                         "health"])
-    header_info = demo_parser.parse_header()
-    map_name = header_info['map_name']
-    players = demo_parser.parse_player_info()
+    states = {}
+    current_state = None
 
-    team_1 = Team()
-    team_1.set_ct()
-    team_2 = Team()
-    m = Match(map_name, game_info, team_1, team_2)
-    for index, row in players.iterrows():
-        if row["team_number"] == 2:
-            team_1.add_player(Player(row["name"], row["steamid"]))
-        elif row["team_number"] == 3: 
-            team_2.add_player(Player(row["name"], row["steamid"]))
+    def switch_state(state_name, data=None):
+        nonlocal current_state
+        if state_name == "game":
+            match = data.get("match")
+            current_state = Game(switch_state, screen, match)
+            states[state_name] = current_state
 
-    game = Game(m)
-    game.run()
+        current_state = states[state_name]
+
+    # Initialize states
+    states["start_menu"] = StartMenu(switch_state, screen)
+    switch_state("start_menu")
+
+    running = True
+    while running:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                running = False
+
+        current_state.handle_events(events)
+        current_state.update()
+        current_state.draw()
+
+        pygame.display.flip()
+        clock.tick(60)
+
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
