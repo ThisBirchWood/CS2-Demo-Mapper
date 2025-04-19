@@ -4,11 +4,10 @@ from controllers.player_controller import PlayerController
 import pygame
 
 class Game(GameState):
-    def __init__(self, switch_state_callback, screen, match):
-        super().__init__(switch_state_callback, screen)
-        self.match = match
+    def __init__(self, switch_state_callback, context):
+        super().__init__(switch_state_callback, context)
 
-        self.renderer = Renderer(self.match, screen)
+        self.renderer = Renderer(self.match, self.screen)
         self.player_controller = PlayerController(self.renderer.player_render, self.match)
 
     def handle_events(self, events):

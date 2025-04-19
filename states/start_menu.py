@@ -9,13 +9,12 @@ import pygame
 import pygame_gui
 
 class StartMenu(GameState):
-    def __init__(self, switch_state_callback, screen):
-        super().__init__(switch_state_callback, screen)
-        self.screen = screen
-        self.manager = pygame_gui.UIManager((screen.get_width(), screen.get_height()))
+    def __init__(self, switch_state_callback, context):
+        super().__init__(switch_state_callback, context)
+        self.manager = pygame_gui.UIManager((self.screen.get_width(), self.screen.get_height()))
 
         self.default_button_start_x = self.screen.get_width() * 0.1
-        self.default_button_width = screen.get_width() * 0.8
+        self.default_button_width = self.screen.get_width() * 0.8
 
         # buttons
         self.button = Button(self.default_button_start_x, 
@@ -43,7 +42,8 @@ class StartMenu(GameState):
     def _start_game_callback(self):
         """Starts the game."""
         match = self._setup_game(self.demo_file)
-        self.switch_state("game", {"match": match})
+        self.context["match"] = match
+        self.switch_state("game")
 
     def _setup_game(self, demo_file: str) -> Match:
         demo_parser = demoparser2.DemoParser(demo_file)
