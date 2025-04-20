@@ -1,11 +1,9 @@
 # Description: This file contains the CoordinateManager class which is responsible for converting coordinates to pixels and vice versa.
-
-import math
 import pygame
 from utils.utils import mapped_value
 from utils.json_object import JSONObject
 
-class MapCoordController:
+class MapCoordConverter:
     def __init__(self, screen_width: int, screen_height, json_file: str, map_image_path: str):
         self.screen_width = screen_width
         self.screen_height = screen_height
@@ -50,7 +48,7 @@ class MapCoordController:
         return mapped_x, mapped_y
     
 if __name__ == "__main__":
-    map_coord_controller = MapCoordController(700, 700, -3000, 3000, -3000, 3000)
+    map_coord_controller = MapCoordConverter(700, 700, -3000, 3000, -3000, 3000)
     print(map_coord_controller.map_to_screen(0,0))
 
     
