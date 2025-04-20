@@ -11,7 +11,7 @@ class PlayerController:
     def _update_hover_state(self, event, player):
         if event.type == pygame.MOUSEMOTION:
             mouse_x, mouse_y = event.pos
-            player_x, player_y = self.player_renderer.map_coord_controller.map_to_screen(player.x, player.y)
+            player_x, player_y = self.player_renderer.map_coord_converter.map_to_screen(player.x, player.y)
             distance = ((mouse_x - player_x) ** 2 + (mouse_y - player_y) ** 2) ** 0.5
             
             if distance < self.player_renderer.get_radius():

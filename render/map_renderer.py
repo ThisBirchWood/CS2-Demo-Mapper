@@ -1,6 +1,5 @@
 import pygame
 from utils.json_object import JSONObject
-from controllers.map_coord_controller import MapCoordController
 
 class MapRenderer:
     def __init__(self, screen, map_data_path, map_image_path):
