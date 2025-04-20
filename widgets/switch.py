@@ -70,22 +70,23 @@ class Switch:
                 self._press()
 
     def draw(self, screen):
-        # Draw the switch border
-        if self.is_toggled:
+        # Move the rectangle to right over time if toggled
+        if self.is_toggled and self.rect_offset < (self.width // 2):
+            self.rect_offset += self.toggle_speed
+        elif not self.is_toggled and self.rect_offset > 0:
+            # Move the rectangle to left over time if not toggled
+            self.rect_offset -= self.toggle_speed
+        elif self.is_toggled:
+            # Draw border
             pygame.draw.rect(screen, (255, 0, 0), (self.x-self.border_width, 
-                                                   self.y-self.border_width, 
-                                                   self.width+(self.border_width*2), 
-                                                   self.height+(self.border_width*2)), 
-                                                   border_radius=self.border_radius)
+                                        self.y-self.border_width, 
+                                        self.width+(self.border_width*2), 
+                                        self.height+(self.border_width*2)), 
+                                        border_radius=self.border_radius)
         # Draw the switch background
         pygame.draw.rect(screen, self.background_colour, (self.x, self.y, self.width, self.height), border_radius=self.border_radius)
 
         # Draw the switch foreground
-        if self.is_toggled and self.rect_offset < (self.width // 2):
-            self.rect_offset += self.toggle_speed
-        elif not self.is_toggled and self.rect_offset > 0:
-            self.rect_offset -= self.toggle_speed
-
         pygame.draw.rect(screen, self.foreground_colour, (self.x + self.rect_offset, self.y, self.width // 2, self.height), border_radius=self.border_radius)
 
 

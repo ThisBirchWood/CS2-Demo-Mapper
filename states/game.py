@@ -7,7 +7,7 @@ class Game(GameState):
     def __init__(self, switch_state_callback, context):
         super().__init__(switch_state_callback, context)
 
-        self.renderer = Renderer(self.match, self.screen)
+        self.renderer = Renderer(self.match, self.screen, self.options)
         self.player_controller = PlayerController(self.renderer.player_render, self.match)
 
     def handle_events(self, events):
@@ -25,4 +25,3 @@ class Game(GameState):
     def draw(self):
         """Draws everything on screen."""
         self.renderer.render()
-        pygame.display.flip()

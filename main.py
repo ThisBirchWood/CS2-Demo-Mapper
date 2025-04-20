@@ -1,6 +1,7 @@
 import pygame
 from states.game import Game
 from states.start_menu import StartMenu
+from states.settings_menu import SettingsMenu
 
 def main():
     pygame.init()
@@ -17,6 +18,7 @@ def main():
             "show_yaw": True
         }
     }
+
     current_state = None
 
     def switch_state(state_name):
@@ -24,7 +26,7 @@ def main():
         if state_name == "game":
             # Initialize Game state here
             try:
-                match = context["match"]
+                context["match"]
             except KeyError:
                 raise ValueError("Match object is required to initialize Game state.")
             
@@ -35,6 +37,7 @@ def main():
 
     # Initialize states
     states["start_menu"] = StartMenu(switch_state, context)
+    states["settings_menu"] = SettingsMenu(switch_state, context)
     switch_state("start_menu")
 
     running = True

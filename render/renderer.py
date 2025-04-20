@@ -7,9 +7,10 @@ from render.gui_renderer import GUIRenderer
 from utils.json_object import JSONObject
 
 class Renderer:
-    def __init__(self, match: Match, screen):
+    def __init__(self, match: Match, screen, options: dict):
         self.screen = screen
         self.match = match
+        self.options = options
 
         ## Initialize fonts
         self.font = pygame.font.Font(None, 36)
@@ -42,7 +43,7 @@ class Renderer:
                                                        self.top_left_x, self.bottom_right_x, self.top_left_y, self.bottom_right_y)
         
         self.slider = HorizontalSlider(self.screen, 50, 650, self.screen.get_width()-100, 20, 1, self.match.max_tick)
-        self.player_render = PlayerRenderer(self.screen, self.match, self.map_coord_controller, self.small_font)
+        self.player_render = PlayerRenderer(self.screen, self.match, self.map_coord_controller, self.options)
         self.text_render = GUIRenderer(self.screen, self.match)
 
     def render_map(self):

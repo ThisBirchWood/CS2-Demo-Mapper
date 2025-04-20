@@ -17,13 +17,21 @@ class StartMenu(GameState):
         self.default_button_width = self.screen.get_width() * 0.8
 
         # buttons
-        self.button = Button(self.default_button_start_x, 
+        self.upload_demo_button = Button(self.default_button_start_x, 
                   100, 
                   self.default_button_width, 
                   50, 
                   self._get_demo)
-        self.button.set_text("Upload Demo")
-        self.button.set_font_size(40)
+        self.upload_demo_button.set_text("Upload Demo")
+        self.upload_demo_button.set_font_size(40)
+
+        self.settings_button = Button(self.default_button_start_x,
+                    200, 
+                    self.default_button_width, 
+                    50, 
+                    lambda: self.switch_state("settings_menu"))
+        self.settings_button.set_text("Settings")
+        self.settings_button.set_font_size(40)
 
         # file dialog
         self.file_dialog = None
@@ -57,7 +65,7 @@ class StartMenu(GameState):
         team_1 = Team()
         team_1.set_ct()
         team_2 = Team()
-        m = Match(map_name, game_info, team_1, team_2)
+        m = Match(map_name, game_info, team_1, team_2, self.options)
         for index, row in players.iterrows():
             if row["team_number"] == 2:
                 team_1.add_player(Player(row["name"], row["steamid"]))
@@ -72,7 +80,8 @@ class StartMenu(GameState):
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
-            self.button.handle_event(event)
+            self.upload_demo_button.handle_event(event)
+            self.settings_button.handle_event(event)
             self.manager.process_events(event)
                     # Handle file dialog interaction
             if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
@@ -85,7 +94,9 @@ class StartMenu(GameState):
 
     def draw(self):
         """Draws everything on screen."""
-        self.button.draw(self.screen)
+        self.screen.fill((30, 30, 30))  # Clear screen
+        self.upload_demo_button.draw(self.screen)
+        self.settings_button.draw(self.screen)
         self.manager.draw_ui(self.screen)
 
     

@@ -5,11 +5,12 @@ from controllers.map_coord_controller import MapCoordController
 from utils.utils import mapped_value
 
 class PlayerRenderer:
-    def __init__(self, screen, match: Match, map_coord_controller: MapCoordController, player_font):
+    def __init__(self, screen, match: Match, map_coord_controller: MapCoordController, options: dict):
         self.screen = screen
         self.match = match
         self.map_coord_controller = map_coord_controller
-        self.player_font = player_font
+        self.options = options
+        self.player_font = pygame.font.Font(None, 15)
 
         self.player_radius = 5
         self.hovered_radius = 10
@@ -78,5 +79,6 @@ class PlayerRenderer:
 
                 self._render_circle(player, team)
                 self._render_text(player)
-                self._render_yaw(player, team)
+                if self.options["show_yaw"]:
+                    self._render_yaw(player, team)
                 self._render_health(player)
