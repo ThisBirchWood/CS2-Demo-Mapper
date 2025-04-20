@@ -7,6 +7,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((720, 720))
     clock = pygame.time.Clock()
+    pygame.display.set_caption("CS2 Demo Viewer")
 
     states = {}
     context = {
@@ -15,7 +16,8 @@ def main():
         "font": pygame.font.Font(None, 36),
         "small_font": pygame.font.Font(None, 15),
         "options": {
-            "show_yaw": True
+            "show_yaw": True,
+            "show_health": True
         }
     }
 

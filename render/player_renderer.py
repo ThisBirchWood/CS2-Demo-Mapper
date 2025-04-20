@@ -82,5 +82,6 @@ class PlayerRenderer:
 
                 if self.options["show_yaw"]:
                     self._render_yaw(player, team)
-                    
-                self._render_health(player)
+
+                if self.options["show_health"]:
+                    self._render_health(player)

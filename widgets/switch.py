@@ -12,6 +12,7 @@ class Switch:
         self.is_toggled = default_value
         self.background_colour = (211,211,211)
         self.foreground_colour = (150, 150, 150)
+        self.active_border_colour = (255, 0, 0)
         self.border_width = 1
         self.border_radius = 3
         self.toggle_speed = 5
@@ -78,7 +79,7 @@ class Switch:
             self.rect_offset -= self.toggle_speed
         elif self.is_toggled:
             # Draw border
-            pygame.draw.rect(screen, (255, 0, 0), (self.x-self.border_width, 
+            pygame.draw.rect(screen, self.active_border_colour, (self.x-self.border_width, 
                                         self.y-self.border_width, 
                                         self.width+(self.border_width*2), 
                                         self.height+(self.border_width*2)), 
