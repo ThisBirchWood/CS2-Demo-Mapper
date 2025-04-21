@@ -9,7 +9,7 @@ class SettingsMenu(GameState):
 
         # Buttons
         self.back_button = Button(10, 10, 50, 50, lambda: self.switch_state(self.context["previous_states"].pop()))   
-        self.back_button.set_text("Back")
+        self.back_button.set_image("assets/arrow.png")
 
         self.show_yaw_text = self.font.render("Show Yaw: ", True, (255, 255, 255))
         self.show_yaw_button = Switch(100, 100, 50, 50, self.options["show_yaw"])

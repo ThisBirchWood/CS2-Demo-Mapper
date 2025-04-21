@@ -12,7 +12,7 @@ class GUIRenderer:
         
         # Settings button
         self.settings_button = Button(self.screen.get_width()-40, 10, 30, 30, None)
-        self.settings_button.set_text("Settings")
+        self.settings_button.set_image("assets/setting.png")
 
         self.colour = (255, 255, 255)
 
