@@ -18,7 +18,7 @@ class StartMenu(GameState):
 
         # buttons
         self.upload_demo_button = Button(self.default_button_start_x, 
-                  100, 
+                  250, 
                   self.default_button_width, 
                   50, 
                   self._get_demo)
@@ -26,7 +26,7 @@ class StartMenu(GameState):
         self.upload_demo_button.set_font_size(40)
 
         self.settings_button = Button(self.default_button_start_x,
-                    200, 
+                    350, 
                     self.default_button_width, 
                     50, 
                     lambda: self.switch_state("settings_menu"))
