@@ -10,7 +10,7 @@ class GUIController:
         self.settings_button.set_action(lambda: self.callback_function("settings_menu"))
 
         self.back_button = gui_renderer.back_button
-        self.back_button.set_action(lambda: self.callback_function(previous_states.pop()))
+        self.back_button.set_action(lambda: self.callback_function("start_menu"))
 
     def update(self, event):
         self.slider.handle_event(event)

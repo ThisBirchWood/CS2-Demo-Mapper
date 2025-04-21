@@ -13,6 +13,7 @@ class SettingsMenu(GameState):
         # Text
         self.show_yaw_text = self.font.render("Show Yaw: ", True, (255, 255, 255))
         self.show_health_text = self.font.render("Show Health: ", True, (255, 255, 255))
+        self.show_names_text = self.font.render("Show Names: ", True, (255, 255, 255))
 
         # Buttons
         self.back_button = Button(10, 10, 50, 50, lambda: self.switch_state(self.context["previous_states"].pop()))   
@@ -21,6 +22,7 @@ class SettingsMenu(GameState):
         # Switches
         self.show_yaw_button = Switch(self.widget_start_x, 100, 100, self.show_yaw_text.get_rect().height, self.options["show_yaw"])
         self.show_health_button = Switch(self.widget_start_x, 150, 100, self.show_health_text.get_rect().height, self.options["show_health"])
+        self.show_names_button = Switch(self.widget_start_x, 200, 100, self.show_names_text.get_rect().height, self.options["show_names"])
 
     def handle_events(self, events):
         """Handles user inputs."""
@@ -29,6 +31,7 @@ class SettingsMenu(GameState):
                 self.switch_state("start_menu")
             self.show_yaw_button.handle_event(event)
             self.show_health_button.handle_event(event)
+            self.show_names_button.handle_event(event)
             self.back_button.handle_event(event)
 
     def update(self):
@@ -43,6 +46,11 @@ class SettingsMenu(GameState):
         else:
             self.options["show_health"] = False
 
+        if self.show_names_button.get_is_toggled():
+            self.options["show_names"] = True
+        else:
+            self.options["show_names"] = False
+
         # Save settings to context
         self.context["options"] = self.options
 
@@ -54,6 +62,9 @@ class SettingsMenu(GameState):
 
         self.screen.blit(self.show_health_text, (self.text_start_x, self.show_health_button.y))
         self.show_health_button.draw(self.screen)
+
+        self.screen.blit(self.show_names_text, (self.text_start_x, self.show_names_button.y))
+        self.show_names_button.draw(self.screen)
 
         self.back_button.draw(self.screen)
 

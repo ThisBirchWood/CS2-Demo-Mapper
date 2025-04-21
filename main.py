@@ -19,7 +19,8 @@ def main():
         "small_font": pygame.font.Font(None, 15),
         "options": {
             "show_yaw": True,
-            "show_health": True
+            "show_health": True,
+            "show_names": True
         }
     }
 

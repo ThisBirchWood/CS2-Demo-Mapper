@@ -78,7 +78,9 @@ class PlayerRenderer:
                     continue
 
                 self._render_circle(player, team)
-                self._render_text(player)
+
+                if self.options["show_names"]:
+                    self._render_text(player)
 
                 if self.options["show_yaw"]:
                     self._render_yaw(player, team)
