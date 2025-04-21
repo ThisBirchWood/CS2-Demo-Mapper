@@ -8,7 +8,7 @@ class SettingsMenu(GameState):
         super().__init__(switch_state_callback, context)
 
         # Buttons
-        self.back_button = Button(10, 10, 50, 50, lambda: self.switch_state("start_menu"))
+        self.back_button = Button(10, 10, 50, 50, lambda: self.switch_state(self.context["previous_states"].pop()))   
         self.back_button.set_text("Back")
 
         self.show_yaw_text = self.font.render("Show Yaw: ", True, (255, 255, 255))

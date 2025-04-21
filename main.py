@@ -2,6 +2,7 @@ import pygame
 from states.game import Game
 from states.start_menu import StartMenu
 from states.settings_menu import SettingsMenu
+from utils.stack import Stack
 
 def main():
     pygame.init()
@@ -13,6 +14,7 @@ def main():
     context = {
         "match": None,
         "screen": screen,
+        "previous_states": Stack(), 
         "font": pygame.font.Font(None, 36),
         "small_font": pygame.font.Font(None, 15),
         "options": {
@@ -22,9 +24,12 @@ def main():
     }
 
     current_state = None
+    current_state_name = None
 
     def switch_state(state_name):
         nonlocal current_state
+        nonlocal current_state_name
+
         if state_name == "game":
             # Initialize Game state here
             try:
@@ -35,7 +40,10 @@ def main():
             current_state = Game(switch_state, context)
             states[state_name] = current_state
 
+        context["previous_states"].push(current_state_name)
+
         current_state = states[state_name]
+        current_state_name = state_name
 
     # Initialize states
     states["start_menu"] = StartMenu(switch_state, context)

@@ -24,7 +24,7 @@ class Game(GameState):
 
         # Controllers
         self.player_controller = PlayerController(self.player_renderer, self.match)
-        self.gui_controller = GUIController(self.gui_render)
+        self.gui_controller = GUIController(self.gui_render, self.switch_state)
 
 
     def handle_events(self, events):

@@ -1,5 +1,6 @@
 import pygame
 from widgets.slider import HorizontalSlider
+from widgets.button import Button
 
 class GUIRenderer:
     def __init__(self, screen, match):
@@ -8,6 +9,10 @@ class GUIRenderer:
         self.match = match
 
         self.slider = HorizontalSlider(self.screen, 50, 650, self.screen.get_width()-100, 20, 1, self.match.max_tick)
+        
+        # Settings button
+        self.settings_button = Button(self.screen.get_width()-40, 10, 30, 30, None)
+        self.settings_button.set_text("Settings")
 
         self.colour = (255, 255, 255)
 
@@ -18,6 +23,9 @@ class GUIRenderer:
     def _render_team_scores(self, team_1_score, team_2_score):
         text = self.font.render(f"Score: {team_1_score} - {team_2_score}", True, self.colour)
         self.screen.blit(text, (10, 40))
+
+    def _render_settings_button(self):
+        self.settings_button.draw(self.screen)
 
     def _render_slider(self):
         # Update slider value
@@ -32,4 +40,5 @@ class GUIRenderer:
     def render(self):
         self._render_current_tick(self.match.tick, self.match.max_tick)
         self._render_team_scores(self.match.team_1.score, self.match.team_2.score)
+        self._render_settings_button()
         self._render_slider()
