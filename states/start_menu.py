@@ -84,11 +84,14 @@ class StartMenu(GameState):
                 self.upload_demo_button.handle_event(event)
                 self.settings_button.handle_event(event)
             self.manager.process_events(event)
-                    # Handle file dialog interaction
+               
             if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
                 self.file_dialog = None
                 self.demo_file = event.text
                 self._start_game_callback()
+            elif event.type == pygame_gui.UI_WINDOW_CLOSE:
+                self.file_dialog = None
+                self.demo_file = None
 
     def update(self):
         self.manager.update(0.1)
