@@ -80,12 +80,13 @@ class StartMenu(GameState):
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
-            self.upload_demo_button.handle_event(event)
-            self.settings_button.handle_event(event)
+            if not self.file_dialog:
+                self.upload_demo_button.handle_event(event)
+                self.settings_button.handle_event(event)
             self.manager.process_events(event)
                     # Handle file dialog interaction
             if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
-                self.file_dialog.kill()
+                self.file_dialog = None
                 self.demo_file = event.text
                 self._start_game_callback()
 
