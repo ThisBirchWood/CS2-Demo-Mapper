@@ -33,6 +33,14 @@ class StartMenu(GameState):
         self.settings_button.set_text("Settings")
         self.settings_button.set_font_size(40)
 
+        self.quit_button = Button(self.default_button_start_x,
+                                  450,
+                                  self.default_button_width,
+                                  50,
+                                  pygame.quit)
+        self.quit_button.set_text("Quit")
+        self.quit_button.set_font_size(40)
+
         # file dialog
         self.file_dialog = None
         self.demo_file = None
@@ -83,6 +91,7 @@ class StartMenu(GameState):
             if not self.file_dialog:
                 self.upload_demo_button.handle_event(event)
                 self.settings_button.handle_event(event)
+                self.quit_button.handle_event(event)
             self.manager.process_events(event)
                
             if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
@@ -101,6 +110,7 @@ class StartMenu(GameState):
         self.screen.fill((30, 30, 30))  # Clear screen
         self.upload_demo_button.draw(self.screen)
         self.settings_button.draw(self.screen)
+        self.quit_button.draw(self.screen)
         self.manager.draw_ui(self.screen)
 
     
