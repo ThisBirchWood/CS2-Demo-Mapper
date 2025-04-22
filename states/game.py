@@ -16,8 +16,9 @@ class Game(GameState):
 
         # Game Box
         self.game_box = pygame.Surface((600, 600), pygame.SRCALPHA)
+        self.game_box_top_left = (350, 0)
 
-        # Map Coordinate Helper Class
+        # Helper Classes
         self.map_coord_controller = MapCoordConverter(self.game_box.get_width(), self.game_box.get_height(), match_data_path, match_image_path)
 
         # Renderers
@@ -26,7 +27,7 @@ class Game(GameState):
         self.gui_render = GUIRenderer(self.screen, self.match)
 
         # Controllers
-        self.player_controller = PlayerController(self.player_renderer, self.match)
+        self.player_controller = PlayerController(self.player_renderer, self.match, self.game_box_top_left)
         self.gui_controller = GUIController(self.gui_render, self.switch_state, self.context["previous_states"])
 
 
@@ -50,4 +51,4 @@ class Game(GameState):
         self.map_renderer.render()
         self.player_renderer.render()
         self.gui_render.render()
-        self.screen.blit(self.game_box, (350, 0))
+        self.screen.blit(self.game_box, self.game_box_top_left)

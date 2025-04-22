@@ -57,10 +57,7 @@ class Switch:
     ## Private methods
     def _press(self):
         """Toggle the switch state."""
-        if self.is_toggled == True:
-            self.is_toggled = False
-        else:
-            self.is_toggled = True
+        self.is_toggled = not self.is_toggled
 
     ## Public methods
     def handle_event(self, event):
