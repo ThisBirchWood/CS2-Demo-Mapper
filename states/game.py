@@ -15,7 +15,7 @@ class Game(GameState):
         match_image_path = f"maps/{self.match.map_name}.png"
 
         # Game Box
-        self.game_box = pygame.Surface((700, 700), pygame.SRCALPHA)
+        self.game_box = pygame.Surface((600, 600), pygame.SRCALPHA)
 
         # Map Coordinate Helper Class
         self.map_coord_controller = MapCoordConverter(self.game_box.get_width(), self.game_box.get_height(), match_data_path, match_image_path)
@@ -50,4 +50,4 @@ class Game(GameState):
         self.map_renderer.render()
         self.player_renderer.render()
         self.gui_render.render()
-        self.screen.blit(self.game_box, (300, 0))
+        self.screen.blit(self.game_box, (350, 0))

@@ -23,6 +23,10 @@ class Match:
         # empty tick
         if self.current_tick.empty:
             return
+    
+        # check if current tick has NaN values
+        if self.current_tick.isnull().values.any():
+            return
 
         for player in self.get_players():
             player.x = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["X"].values[0]
