@@ -14,7 +14,7 @@ class Game(GameState):
         match_data_path = f"maps/{self.match.map_name}.json"
         match_image_path = f"maps/{self.match.map_name}.png"
 
-        # Map Coordinate Helper Class,
+        # Map Coordinate Helper Class
         self.map_coord_controller = MapCoordConverter(self.screen.get_width(), self.screen.get_height(), match_data_path, match_image_path)
 
         # Renderers
