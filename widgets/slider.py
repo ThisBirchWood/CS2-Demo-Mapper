@@ -16,24 +16,43 @@ class HorizontalSlider:
         self.rect_radius = 5
 
         self.knob_radius = 10
-        self.knob_x = self.x
+        self.knob_x = self.x + self.knob_radius
         self.dragging = False
 
         self.fill = False
         self.fill_colour = (128, 128, 0)
 
+    def _knob_to_value(self, knob_x):
+        return self.min_value + ((self.max_value - self.min_value) * ((knob_x - (self.x + self.knob_radius)) / (self.width-self.knob_radius)))
+
+    def _value_to_knob(self, value):
+        return self.x + ((self.width-self.knob_radius) * ((value - self.min_value) / (self.max_value - self.min_value))) + self.knob_radius
+
     def handle_event(self, event):
         """Handle mouse events for dragging"""
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.pos[0] >= self.x and event.pos[0] <= self.x + self.width and event.pos[1] >= self.y and event.pos[1] <= self.y + self.height:
-                self.knob_x = event.pos[0]
+            if (
+                event.pos[0] >= self.x
+                and event.pos[0] <= self.x + self.width
+                and event.pos[1] >= self.y
+                and event.pos[1] <= self.y + self.height
+            ):
+                if event.pos[0] < self.x + self.knob_radius:
+                    self.knob_x = self.x + self.knob_radius
+                elif event.pos[0] > self.x + self.width - self.knob_radius:
+                    self.knob_x = self.x + self.width - self.knob_radius
+                else:
+                    self.knob_x = event.pos[0]
                 self.dragging = True
         elif event.type == pygame.MOUSEBUTTONUP:
             self.dragging = False
         elif event.type == pygame.MOUSEMOTION and self.dragging:
-            if event.pos[0] >= self.x and event.pos[0] <= self.x + self.width:
+            if (
+                event.pos[0] >= self.x + self.knob_radius
+                and event.pos[0] <= self.x + self.width - self.knob_radius
+                ):
                 self.knob_x = event.pos[0]
-                self.value = self.min_value + ((self.max_value - self.min_value) * ((self.knob_x - self.x) / self.width))
+                self.value = self._knob_to_value(self.knob_x)
 
     def draw(self):
         """
@@ -59,7 +78,7 @@ class HorizontalSlider:
         else:
             self.value = value
 
-        self.knob_x = self.x + (self.width * ((self.value - self.min_value) / (self.max_value - self.min_value)))
+        self.knob_x = self._value_to_knob(value)
 
     def set_radius(self, radius):
         self.knob_radius = radius

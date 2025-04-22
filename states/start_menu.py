@@ -103,7 +103,7 @@ class StartMenu(GameState):
                 self.demo_file = None
 
     def update(self):
-        self.manager.update(0.1)
+        self.manager.update(0.01)
 
     def draw(self):
         """Draws everything on screen."""
