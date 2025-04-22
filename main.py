@@ -6,7 +6,7 @@ from utils.stack import Stack
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((720, 720))
+    screen = pygame.display.set_mode((1280, 720))
     clock = pygame.time.Clock()
     pygame.display.set_caption("CS2 Demo Viewer")
 

@@ -14,12 +14,15 @@ class Game(GameState):
         match_data_path = f"maps/{self.match.map_name}.json"
         match_image_path = f"maps/{self.match.map_name}.png"
 
+        # Game Box
+        self.game_box = pygame.Surface((700, 700), pygame.SRCALPHA)
+
         # Map Coordinate Helper Class
-        self.map_coord_controller = MapCoordConverter(self.screen.get_width(), self.screen.get_height(), match_data_path, match_image_path)
+        self.map_coord_controller = MapCoordConverter(self.game_box.get_width(), self.game_box.get_height(), match_data_path, match_image_path)
 
         # Renderers
-        self.map_renderer = MapRenderer(self.screen, match_data_path, match_image_path)
-        self.player_renderer = PlayerRenderer(self.screen, self.match, self.map_coord_controller, self.options)
+        self.map_renderer = MapRenderer(self.game_box, match_data_path, match_image_path)
+        self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options)
         self.gui_render = GUIRenderer(self.screen, self.match)
 
         # Controllers
@@ -42,6 +45,9 @@ class Game(GameState):
     def draw(self):
         """Draws everything on screen."""
         self.screen.fill((0, 0, 0))
+        self.game_box.fill((0, 0, 0, 0))
+
         self.map_renderer.render()
         self.player_renderer.render()
         self.gui_render.render()
+        self.screen.blit(self.game_box, (300, 0))
