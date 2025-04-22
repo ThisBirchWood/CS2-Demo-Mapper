@@ -1,5 +1,7 @@
+from render.settings_menu_renderer import SettingsMenuRenderer
+
 class SettingsController:
-    def __init__(self, settings_renderer, callback, context):
+    def __init__(self, settings_renderer: SettingsMenuRenderer, callback, context):
         self.settings_renderer = settings_renderer
         self.switch_state = callback
         self.context = context
