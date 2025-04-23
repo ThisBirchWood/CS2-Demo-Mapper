@@ -4,7 +4,7 @@ CS2 Demo Mapper is a tool that takes a Counter-Strike 2 (CS2) demo file and visu
 ## Current Features
 
 - Top-down visualization of CS2 demos.
-- Supports de_mirage (more maps to come).
+- Supports de_mirage, de_inferno, de_dust2, de_ancient, cs_office, de_anubis, de_overpass.
 
 ## Planned Features
 
