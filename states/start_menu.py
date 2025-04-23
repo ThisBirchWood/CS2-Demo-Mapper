@@ -121,8 +121,8 @@ class StartMenu(GameState):
         self.upload_demo_button.draw(self.screen)
         self.settings_button.draw(self.screen)
         self.quit_button.draw(self.screen)
-        self.manager.draw_ui(self.screen)
         self.screen.blit(self.logo, (self.screen.get_width() * 0.1, 50))
+        self.manager.draw_ui(self.screen)
 
     
 
