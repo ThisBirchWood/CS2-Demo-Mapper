@@ -28,6 +28,12 @@ class Button:
     def get_border_radius(self) -> int:
         return self.border_radius
     
+    def get_colour(self) -> tuple:
+        return self.colour
+    
+    def get_pressed_colour(self) -> tuple:
+        return self.pressed_colour
+    
     def set_font_size(self, font_size: int) -> None:
         self.font_size = font_size
 
@@ -36,6 +42,12 @@ class Button:
 
     def set_border_radius(self, border_radius: int) -> None:
         self.border_radius = border_radius
+
+    def set_colour(self, colour: tuple) -> None:
+        self.colour = colour
+
+    def set_pressed_colour(self, pressed_colour: tuple) -> None:
+        self.pressed_colour = pressed_colour
 
     def set_image(self, image_path: str) -> None: 
         self._load_image(image_path)

@@ -9,7 +9,7 @@ class SettingsMenu(GameState):
     def __init__(self, switch_state_callback, context):
         super().__init__(switch_state_callback, context)
 
-        self.settings_renderer = SettingsMenuRenderer(self.screen, self.context["options"], self.font)
+        self.settings_renderer = SettingsMenuRenderer(self.screen, self.context["options"], self.styling)
         self.settings_controller = SettingsController(self.settings_renderer, self.switch_state, context)
 
     def handle_events(self, events):

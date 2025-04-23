@@ -45,8 +45,8 @@ class Game(GameState):
 
     def draw(self):
         """Draws everything on screen."""
-        self.screen.fill((0, 0, 0))
-        self.game_box.fill((0, 0, 0, 0))
+        self.screen.fill(self.styling["background_colour"])
+        self.game_box.fill(self.styling["background_colour"])
 
         self.map_renderer.render()
         self.player_renderer.render()

@@ -24,6 +24,8 @@ class StartMenu(GameState):
                   self._get_demo)
         self.upload_demo_button.set_text("Upload Demo")
         self.upload_demo_button.set_font_size(40)
+        self.upload_demo_button.set_colour(self.styling["button_colour"])
+        self.upload_demo_button.set_pressed_colour(self.styling["pressed_button_colour"])
 
         self.settings_button = Button(self.default_button_start_x,
                     350, 
@@ -32,6 +34,8 @@ class StartMenu(GameState):
                     lambda: self.switch_state("settings_menu"))
         self.settings_button.set_text("Settings")
         self.settings_button.set_font_size(40)
+        self.settings_button.set_colour(self.styling["button_colour"])
+        self.settings_button.set_pressed_colour(self.styling["pressed_button_colour"])
 
         self.quit_button = Button(self.default_button_start_x,
                                   450,
@@ -40,6 +44,8 @@ class StartMenu(GameState):
                                   pygame.quit)
         self.quit_button.set_text("Quit")
         self.quit_button.set_font_size(40)
+        self.quit_button.set_colour(self.styling["button_colour"])
+        self.quit_button.set_pressed_colour(self.styling["pressed_button_colour"])
 
         # file dialog
         self.file_dialog = None
@@ -107,7 +113,7 @@ class StartMenu(GameState):
 
     def draw(self):
         """Draws everything on screen."""
-        self.screen.fill((30, 30, 30))  # Clear screen
+        self.screen.fill(self.styling["background_colour"])  # Clear screen
         self.upload_demo_button.draw(self.screen)
         self.settings_button.draw(self.screen)
         self.quit_button.draw(self.screen)
