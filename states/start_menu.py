@@ -27,6 +27,7 @@ class StartMenu(GameState):
                   50, 
                   self._get_demo)
         self.upload_demo_button.set_text("Upload Demo")
+        self.upload_demo_button.set_font(self.styling["font"])
         self.upload_demo_button.set_font_size(40)
         self.upload_demo_button.set_colour(self.styling["button_colour"])
         self.upload_demo_button.set_pressed_colour(self.styling["pressed_button_colour"])
@@ -37,6 +38,7 @@ class StartMenu(GameState):
                     50, 
                     lambda: self.switch_state("settings_menu"))
         self.settings_button.set_text("Settings")
+        self.settings_button.set_font(self.styling["font"])
         self.settings_button.set_font_size(40)
         self.settings_button.set_colour(self.styling["button_colour"])
         self.settings_button.set_pressed_colour(self.styling["pressed_button_colour"])
@@ -47,6 +49,7 @@ class StartMenu(GameState):
                                   50,
                                   pygame.quit)
         self.quit_button.set_text("Quit")
+        self.quit_button.set_font(self.styling["font"])
         self.quit_button.set_font_size(40)
         self.quit_button.set_colour(self.styling["button_colour"])
         self.quit_button.set_pressed_colour(self.styling["pressed_button_colour"])

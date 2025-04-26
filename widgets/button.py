@@ -15,12 +15,16 @@ class Button:
         self.font_size = 20
         self.colour = (255, 255, 255)
         self.pressed_colour = (200, 200, 200)
+        self.font = pygame.font.Font(None, self.font_size)
         self.pressed = False
         self.border_radius = 3
 
     ## Getters and setters
     def get_font_size(self) -> int:
         return self.font_size
+    
+    def get_font(self) -> pygame.font.Font:
+        return self.font
     
     def get_text(self) -> str:
         return self.text
@@ -36,6 +40,9 @@ class Button:
     
     def set_font_size(self, font_size: int) -> None:
         self.font_size = font_size
+
+    def set_font(self, font: pygame.Font) -> None:
+        self.font = font
 
     def set_text(self, text: str) -> None:
         self.text = text
@@ -60,9 +67,8 @@ class Button:
         self.image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
-    def _draw_text(self, screen, text: str, font_size: int) -> None:
-        font = pygame.font.Font(None, font_size)
-        text_surface = font.render(text, True, (0, 0, 0))
+    def _draw_text(self, screen, text: str) -> None:
+        text_surface = self.font.render(text, True, (0, 0, 0))
         text_rect = text_surface.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
         screen.blit(text_surface, text_rect)
 
@@ -93,7 +99,7 @@ class Button:
             screen.blit(self.image, (self.x, self.y))
 
         if self.text:
-            self._draw_text(screen, self.text, self.font_size)
+            self._draw_text(screen, self.text)
             
 if __name__ == "__main__":
     pygame.init()

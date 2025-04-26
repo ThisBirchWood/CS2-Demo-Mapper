@@ -21,8 +21,8 @@ def main():
             "show_names": True
         },
         "styling": {
-            "font": pygame.font.Font(None, 36),
-            "small_font": pygame.font.Font(None, 15),
+            "font": pygame.font.Font("assets/fonts/Metropolis-Regular.ttf", 36),
+            "small_font": pygame.font.Font("assets/fonts/Metropolis-Regular.ttf", 15),
             "button_colour": (200, 200, 200),
             "pressed_button_colour": (150, 150, 150),
             "text_colour": (255, 255, 255),

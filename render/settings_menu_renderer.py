@@ -19,6 +19,7 @@ class SettingsMenuRenderer:
         # Buttons
         self.back_button = Button(10, 10, 50, 50, None)   
         self.back_button.set_colour(self.styling["button_colour"])
+        self.back_button.set_font(self.styling["font"])
         self.back_button.set_pressed_colour(self.styling["pressed_button_colour"])
         self.back_button.set_image("assets/arrow.png")
 
