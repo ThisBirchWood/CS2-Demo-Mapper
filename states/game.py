@@ -17,6 +17,9 @@ class Game(GameState):
         match_image_path = f"maps/{self.match.map_name}.png"
 
         # Screen Areas
+        self.gui_box = pygame.Surface((350, self.screen.get_height()), pygame.SRCALPHA)
+        self.gui_box_top_left = (0, 0)
+
         self.game_box = pygame.Surface((600, 600), pygame.SRCALPHA)
         self.game_box_top_left = (350, 0)
 
@@ -27,7 +30,7 @@ class Game(GameState):
         self.map_renderer = MapRenderer(self.game_box, match_data_path, match_image_path)
         self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options)
         self.gui_render = GUIRenderer(self.screen, self.match)
-        self.info_render = InfoRenderer(self.screen, self.styling)
+        self.info_render = InfoRenderer(self.screen, self.styling, self.match)
 
         # Controllers
         self.player_controller = PlayerController(self.player_renderer, self.match, self.game_box_top_left)
