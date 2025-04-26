@@ -9,6 +9,7 @@ class Player:
         self.yaw = yaw # Probably only need this if top-down
 
         self.health = 100
+        self.armour = 0
         self.dead = False
         self.is_shooting = False
         self.current_weapon = None

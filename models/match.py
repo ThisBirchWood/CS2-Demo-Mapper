@@ -24,9 +24,9 @@ class Match:
         if self.current_tick.empty:
             return
     
-        # check if current tick has NaN values
-        if self.current_tick.isnull().values.any():
-            return
+        # # check if current tick has NaN values
+        # if self.current_tick.isnull().values.any():
+        #     return
 
         for player in self.get_players():
             player.x = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["X"].values[0]
@@ -37,6 +37,7 @@ class Match:
             player.dead = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["is_alive"].values[0] == 0
             player.is_shooting = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["shots_fired"].values[0]
             player.health = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["health"].values[0])
+            player.armour = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["armor_value"].values[0])
             player.current_weapon = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["active_weapon_name"].values[0]
 
     def _update_round(self) -> None:

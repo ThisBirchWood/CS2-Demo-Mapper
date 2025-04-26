@@ -20,6 +20,7 @@ class InfoRenderer:
         player_info = f"Player: {self.selected_player.name}\n"
         player_info += f"Active Weapon: {self.selected_player.current_weapon}\n"
         player_info += f"Health: {self.selected_player.health}\n"
+        player_info += f"Armour: {self.selected_player.armour}\n"
 
         text_surface = self.small_font.render(player_info, True, self.styling["text_colour"])
         self.screen.blit(text_surface, (10, 100))
