@@ -11,6 +11,7 @@ class Player:
         self.health = 100
         self.dead = False
         self.is_shooting = False
+        self.current_weapon = None
 
         ## UI-related state
         self.is_selected = False

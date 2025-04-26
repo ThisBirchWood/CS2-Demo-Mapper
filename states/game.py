@@ -3,8 +3,10 @@ from controllers.player_controller import PlayerController
 from render.map_renderer import MapRenderer
 from render.gui_renderer import GUIRenderer
 from render.player_renderer import PlayerRenderer
+from render.info_renderer import InfoRenderer
 from utils.map_coord_converter import MapCoordConverter
 from controllers.gui_controller import GUIController
+from controllers.info_controller import InfoController
 import pygame
 
 class Game(GameState):
@@ -14,7 +16,7 @@ class Game(GameState):
         match_data_path = f"maps/{self.match.map_name}.json"
         match_image_path = f"maps/{self.match.map_name}.png"
 
-        # Game Box
+        # Screen Areas
         self.game_box = pygame.Surface((600, 600), pygame.SRCALPHA)
         self.game_box_top_left = (350, 0)
 
@@ -25,11 +27,12 @@ class Game(GameState):
         self.map_renderer = MapRenderer(self.game_box, match_data_path, match_image_path)
         self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options)
         self.gui_render = GUIRenderer(self.screen, self.match)
+        self.info_render = InfoRenderer(self.screen, self.styling)
 
         # Controllers
         self.player_controller = PlayerController(self.player_renderer, self.match, self.game_box_top_left)
         self.gui_controller = GUIController(self.gui_render, self.switch_state, self.context["previous_states"])
-
+        self.info_controller = InfoController(self.info_render, self.player_controller)
 
     def handle_events(self, events):
         """Handles user inputs."""
@@ -38,6 +41,7 @@ class Game(GameState):
                 self.switch_state("menu")
             self.player_controller.update(event)
             self.gui_controller.update(event)
+            self.info_controller.update(event)
 
     def update(self):
         """Updates game objects."""
@@ -51,4 +55,5 @@ class Game(GameState):
         self.map_renderer.render()
         self.player_renderer.render()
         self.gui_render.render()
+        self.info_render.render()
         self.screen.blit(self.game_box, self.game_box_top_left)
