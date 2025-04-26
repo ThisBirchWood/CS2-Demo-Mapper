@@ -56,16 +56,21 @@ class StartMenu(GameState):
 
         # file dialog
         self.file_dialog = None
+        self.file_dialog_width = 440
+        self.file_dialog_height = 500
+        self.file_dialog_x = (self.screen.get_width()//2)-(self.file_dialog_width//2)
+        self.file_dialog_y = (self.screen.get_height()//2)-(self.file_dialog_height//2)
+
         self.demo_file = None
 
 
     def _get_demo(self):
         """Loads a demo file."""
-        # pygame-pgu
         self.file_dialog = pygame_gui.windows.UIFileDialog(
-            rect=pygame.Rect(160, 50, 440, 500),
+            rect=pygame.Rect(self.file_dialog_x, self.file_dialog_y, self.file_dialog_width, self.file_dialog_height),
             manager=self.manager,
-            window_title='Pick a .dem file'
+            window_title='Pick a .dem file',
+            allowed_suffixes=['.dem']
         )
     
     def _start_game_callback(self):
