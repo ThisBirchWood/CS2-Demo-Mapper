@@ -84,6 +84,7 @@ class StartMenu(GameState):
         demo_parser = demoparser2.DemoParser(demo_file)
         game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid", 
                                             "team_rounds_total", "team_num", "total_rounds_played", "shots_fired",
+                                            "kills_total", "deaths_total", "assists_total",
                                             "health", "armor_value", "active_weapon_name"])
         header_info = demo_parser.parse_header()
         map_name = header_info['map_name']

@@ -22,7 +22,8 @@ def main():
         },
         "styling": {
             "font": pygame.font.Font("assets/fonts/Metropolis-Regular.ttf", 30),
-            "small_font": pygame.font.Font("assets/fonts/Metropolis-Regular.ttf", 15),
+            "small_font": pygame.font.Font("assets/fonts/Metropolis-Regular.ttf", 18),
+            "underline_bold_font": (lambda f: (f.set_underline(True), f)[1])(pygame.font.Font("assets/fonts/Metropolis-Bold.ttf", 30)),
             "button_colour": (200, 200, 200),
             "pressed_button_colour": (150, 150, 150),
             "text_colour": (255, 255, 255),

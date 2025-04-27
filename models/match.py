@@ -39,6 +39,9 @@ class Match:
             player.health = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["health"].values[0])
             player.armour = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["armor_value"].values[0])
             player.current_weapon = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["active_weapon_name"].values[0]
+            player.kills = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["kills_total"].values[0])
+            player.deaths = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["deaths_total"].values[0])
+            player.assists = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["assists_total"].values[0])
 
     def _update_round(self) -> None:
         if self.current_tick.empty:	

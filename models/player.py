@@ -14,6 +14,10 @@ class Player:
         self.is_shooting = False
         self.current_weapon = None
 
+        self.kills = 0
+        self.deaths = 0
+        self.assists = 0
+
         ## UI-related state
         self.is_selected = False
         self.is_hovered = False
