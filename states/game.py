@@ -33,7 +33,7 @@ class Game(GameState):
 
         # Renderers
         self.map_renderer = MapRenderer(self.game_box, match_data_path, match_image_path)
-        self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options)
+        self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options, self.styling)
         self.gui_render = GUIRenderer(self.screen, self.match)
         self.info_render = InfoRenderer(self.info_box, self.styling, self.match)
         self.control_render = ControlRenderer(self.control_box, self.match)

@@ -26,9 +26,12 @@ class PlayerController:
     def _select_player(self, mouse_x, mouse_y, player):
         if self._is_player_at_mouse(player, mouse_x, mouse_y):
             player.is_selected = not player.is_selected
+
+            if self.selected_player and self.selected_player != player:
+                self.selected_player.is_selected = False
+
             self.selected_player = player if player.is_selected else None
-            print(f"Selected player: {player.name}" if player.is_selected else "Player deselected")
-    
+
     ## Public Methods
     def update(self, event):
         if hasattr(event, 'pos'):

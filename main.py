@@ -27,7 +27,8 @@ def main():
             "pressed_button_colour": (150, 150, 150),
             "text_colour": (255, 255, 255),
             "background_colour": (30, 30, 30),
-            "foreground_colour": (100, 100, 100)
+            "foreground_colour": (100, 100, 100),
+            "player_selected_colour": (255, 255, 0),
         }
     }
 

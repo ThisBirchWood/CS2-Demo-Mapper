@@ -5,11 +5,12 @@ from utils.map_coord_converter import MapCoordConverter
 from utils.utils import mapped_value
 
 class PlayerRenderer:
-    def __init__(self, screen, match: Match, map_coord_converter: MapCoordConverter, options: dict):
+    def __init__(self, screen, match: Match, map_coord_converter: MapCoordConverter, options: dict, styling: dict):
         self.screen = screen
         self.match = match
         self.map_coord_converter = map_coord_converter
         self.options = options
+        self.styling = styling
         self.player_font = pygame.font.Font(None, 15)
 
         self.player_radius = 5
@@ -49,8 +50,12 @@ class PlayerRenderer:
         pygame.draw.circle(self.screen, team.colour, (x, y), radius)
 
     def _render_text(self, player):
+        if player.is_selected:
+            text = self.player_font.render(player.name, True, self.styling["player_selected_colour"])
+        else:
+            text = self.player_font.render(player.name, True, (255, 255, 255))
+
         x, y = self.map_coord_converter.map_to_screen(player.x, player.y)
-        text = self.player_font.render(player.name, True, (255, 255, 255))
         self.screen.blit(text, (x-(text.get_width()/2), y+5))
 
     def _render_yaw(self, player, team):
