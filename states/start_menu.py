@@ -17,8 +17,9 @@ class StartMenu(GameState):
         self.default_button_width = self.screen.get_width() * 0.8
 
         # logo
-        self.logo = pygame.image.load("assets/logo.png")
-        self.logo = pygame.transform.scale(self.logo, (self.screen.get_width() * 0.8, self.screen.get_height() * 0.2))
+        self.logo = pygame.image.load("assets/logo.png").convert_alpha() 
+        self.logo_scale = 0.7
+        self.logo = pygame.transform.smoothscale(self.logo, (self.logo.get_rect().size[0] * self.logo_scale, self.logo.get_rect().size[1] * self.logo_scale))
 
         # buttons
         self.upload_demo_button = Button(self.default_button_start_x, 
@@ -129,7 +130,7 @@ class StartMenu(GameState):
         self.upload_demo_button.draw(self.screen)
         self.settings_button.draw(self.screen)
         self.quit_button.draw(self.screen)
-        self.screen.blit(self.logo, (self.screen.get_width() * 0.1, 50))
+        self.screen.blit(self.logo, ((self.screen.get_width() // 2) - (self.logo.get_width() // 2), 30))
         self.manager.draw_ui(self.screen)
 
     
