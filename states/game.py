@@ -4,9 +4,11 @@ from render.map_renderer import MapRenderer
 from render.gui_renderer import GUIRenderer
 from render.player_renderer import PlayerRenderer
 from render.info_renderer import InfoRenderer
+from render.control_renderer import ControlRenderer
 from utils.map_coord_converter import MapCoordConverter
 from controllers.gui_controller import GUIController
 from controllers.info_controller import InfoController
+from controllers.control_controller import ControlController
 import pygame
 
 class Game(GameState):
@@ -17,11 +19,14 @@ class Game(GameState):
         match_image_path = f"maps/{self.match.map_name}.png"
 
         # Screen Areas
-        self.gui_box = pygame.Surface((350, self.screen.get_height()), pygame.SRCALPHA)
-        self.gui_box_top_left = (0, 0)
+        self.info_box = pygame.Surface((350, self.screen.get_height()), pygame.SRCALPHA)
+        self.info_box_top_left = (0, 0)
 
-        self.game_box = pygame.Surface((600, 600), pygame.SRCALPHA)
+        self.game_box = pygame.Surface((650, 650), pygame.SRCALPHA)
         self.game_box_top_left = (350, 0)
+
+        self.control_box = pygame.Surface((650, 120), pygame.SRCALPHA)
+        self.control_box_top_left = (350, 650)
 
         # Helper Classes
         self.map_coord_controller = MapCoordConverter(self.game_box.get_width(), self.game_box.get_height(), match_data_path, match_image_path)
@@ -30,12 +35,14 @@ class Game(GameState):
         self.map_renderer = MapRenderer(self.game_box, match_data_path, match_image_path)
         self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options)
         self.gui_render = GUIRenderer(self.screen, self.match)
-        self.info_render = InfoRenderer(self.screen, self.styling, self.match)
+        self.info_render = InfoRenderer(self.info_box, self.styling, self.match)
+        self.control_render = ControlRenderer(self.control_box, self.match)
 
         # Controllers
         self.player_controller = PlayerController(self.player_renderer, self.match, self.game_box_top_left)
-        self.gui_controller = GUIController(self.gui_render, self.switch_state, self.context["previous_states"])
+        self.gui_controller = GUIController(self.gui_render, self.switch_state)
         self.info_controller = InfoController(self.info_render, self.player_controller)
+        self.control_controller = ControlController(self.control_render, self.control_box_top_left)
 
     def handle_events(self, events):
         """Handles user inputs."""
@@ -45,6 +52,7 @@ class Game(GameState):
             self.player_controller.update(event)
             self.gui_controller.update(event)
             self.info_controller.update(event)
+            self.control_controller.update(event)
 
     def update(self):
         """Updates game objects."""
@@ -54,9 +62,14 @@ class Game(GameState):
         """Draws everything on screen."""
         self.screen.fill(self.styling["background_colour"])
         self.game_box.fill(self.styling["background_colour"])
+        self.info_box.fill(self.styling["foreground_colour"])
+        self.control_box.fill(self.styling["background_colour"])
 
         self.map_renderer.render()
         self.player_renderer.render()
         self.gui_render.render()
         self.info_render.render()
+        self.control_render.render()
+        self.screen.blit(self.info_box, self.info_box_top_left)
+        self.screen.blit(self.control_box, self.control_box_top_left)
         self.screen.blit(self.game_box, self.game_box_top_left)

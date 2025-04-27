@@ -1,5 +1,4 @@
 import pygame
-from widgets.slider import HorizontalSlider
 from widgets.button import Button
 
 class GUIRenderer:
@@ -8,8 +7,7 @@ class GUIRenderer:
         self.font = pygame.font.Font(None, 36)
         self.match = match
 
-        self.slider = HorizontalSlider(self.screen, 50, 650, self.screen.get_width()-100, 20, 1, self.match.max_tick)
-        
+
         # Buttons
         self.settings_button = Button(self.screen.get_width()-40, 10, 30, 30, None)
         self.settings_button.set_image("assets/setting.png")
@@ -23,16 +21,6 @@ class GUIRenderer:
         self.settings_button.draw(self.screen)
         self.back_button.draw(self.screen)
 
-    def _render_slider(self):
-        # Update slider value
-        if self.slider.dragging:
-            # Set match tick if slider is being dragged
-            self.match.set_tick(int(self.slider.value))
-        else:
-            # Set slider value if slider is not being dragged
-            self.slider.set_value(self.match.tick)
-        self.slider.draw()
 
     def render(self):
         self._render_buttons()
-        self._render_slider()

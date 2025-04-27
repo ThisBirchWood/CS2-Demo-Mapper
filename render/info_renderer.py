@@ -17,13 +17,16 @@ class InfoRenderer:
         if self.selected_player is None:
             return
 
-        player_info = f"Player: {self.selected_player.name}\n"
-        player_info += f"Active Weapon: {self.selected_player.current_weapon}\n"
+        player_info_title = f"{self.selected_player.name}\n"
+        player_info = f"Active Weapon: {self.selected_player.current_weapon}\n"
         player_info += f"Health: {self.selected_player.health}\n"
         player_info += f"Armour: {self.selected_player.armour}\n"
 
-        text_surface = self.small_font.render(player_info, True, self.styling["text_colour"])
+        text_surface = self.font.render(player_info_title, True, self.styling["text_colour"])
         self.screen.blit(text_surface, (10, 100))
+
+        text_surface = self.small_font.render(player_info, True, self.styling["text_colour"])
+        self.screen.blit(text_surface, (10, 150))
 
     def _render_current_tick(self, match_tick, max_tick):
         text = self.font.render(f"Tick: {match_tick}/{max_tick}", True, self.colour)
