@@ -49,21 +49,28 @@ class Match:
         
         self.round = self.current_tick["total_rounds_played"].values[0]
         
-        if self.round >= 12:
-            self.team_1.set_t()
-            self.team_2.set_ct()
-            self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
-            self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == 2]["team_rounds_total"].values[0])
-        else:
-            self.team_1.set_ct()
-            self.team_2.set_t()
-            self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == 2]["team_rounds_total"].values[0])
-            self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == 3]["team_rounds_total"].values[0])
+        self.team_1.score = int(self.current_tick[self.current_tick["team_num"] == self.team_1.id]["team_rounds_total"].values[0])
+        self.team_2.score = int(self.current_tick[self.current_tick["team_num"] == self.team_2.id]["team_rounds_total"].values[0])
+
+    def _update_team_ids(self) -> None:
+        # get random player from each team
+        if self.current_tick.empty:
+            return
+
+        for team in self.get_teams():
+            random_player = team.players[0]
+            player_team_id = self.current_tick[self.current_tick["player_steamid"] == random_player.steam_id]["team_num"].values[0]
+
+            if player_team_id == 2:
+                team.set_t()
+            elif player_team_id == 3:
+                team.set_ct()
 
     def next_tick(self) -> None:
         self.tick += 1
         self.current_tick = self.game_info[self.game_info["tick"] == self.tick]
         self._update_player_positions()
+        self._update_team_ids()
         self._update_round()
 
     def set_tick(self, tick: int) -> None:

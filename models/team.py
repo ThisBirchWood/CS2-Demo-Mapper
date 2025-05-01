@@ -7,7 +7,7 @@ class Team:
     def __init__(self):
         self.players = []
         self.score = 0
-        self.set_t()
+        self.id = 1
 
     def add_player(self, player: Player):
         self.players.append(player)
@@ -16,9 +16,9 @@ class Team:
         self.players.remove(player)
 
     def set_ct(self):
-        self.is_ct = True
+        self.id = 3
         self.colour = CT_COLOUR
 
     def set_t(self):
-        self.is_ct = False
+        self.id = 2
         self.colour = T_COLOUR
