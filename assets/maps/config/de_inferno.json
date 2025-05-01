@@ -1,6 +1,6 @@
 
 {
-	"material":	"maps/de_inferno.png",
+	"material":	"assets/maps/overview/de_inferno.png",
 	"pos_x":		-2087	,
 	"pos_y"	:	3870,
 	"scale":		4.9,

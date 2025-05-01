@@ -13,6 +13,11 @@ class Player:
         self.dead = False
         self.is_shooting = False
         self.current_weapon = None
+        self.has_bomb = False
+        self.is_planting = False
+        self.has_defuser = False
+        self.is_defusing = False
+        self.inventory = []
 
         self.kills = 0
         self.deaths = 0

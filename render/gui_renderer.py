@@ -10,10 +10,10 @@ class GUIRenderer:
 
         # Buttons
         self.settings_button = Button(self.screen.get_width()-40, 10, 30, 30, None)
-        self.settings_button.set_image("assets/setting.png")
+        self.settings_button.set_image("assets/images/setting.png")
 
         self.back_button = Button(self.screen.get_width()-80, 10, 30, 30, None)
-        self.back_button.set_image("assets/arrow.png")
+        self.back_button.set_image("assets/images/arrow.png")
 
         self.colour = (255, 255, 255)
 

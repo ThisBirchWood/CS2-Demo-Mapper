@@ -21,7 +21,7 @@ class SettingsMenuRenderer:
         self.back_button.set_colour(self.styling["button_colour"])
         self.back_button.set_font(self.styling["font"])
         self.back_button.set_pressed_colour(self.styling["pressed_button_colour"])
-        self.back_button.set_image("assets/arrow.png")
+        self.back_button.set_image("assets/images/arrow.png")
 
         # Switches
         self.show_yaw_button = Switch(self.widget_start_x, 100, 100, self.show_yaw_text.get_rect().height, self.options["show_yaw"])

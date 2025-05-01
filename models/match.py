@@ -17,18 +17,7 @@ class Match:
         self.game_info = game_info.sort_values(by=["tick", "player_steamid"]) # pd dataframe sorted by tick
         self.tick_rate = tick_rate
 
-    def _update_player_positions(self) -> None:
-        # inefficient, might need to change
-        
-        # empty tick
-        if self.current_tick.empty:
-            return
-    
-        # # check if current tick has NaN values
-        # if self.current_tick.isnull().values.any():
-        #     return
-
-        for player in self.get_players():
+    def _update_player(self, player: Player) -> None:
             player.x = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["X"].values[0]
             player.y = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Y"].values[0]
             player.z = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Z"].values[0]
@@ -42,6 +31,25 @@ class Match:
             player.kills = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["kills_total"].values[0])
             player.deaths = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["deaths_total"].values[0])
             player.assists = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["assists_total"].values[0])
+            player.inventory = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["inventory"].values[0]
+
+            if "C4 Explosive" in player.inventory:
+                player.has_bomb = True
+            else:
+                player.has_bomb = False
+
+            if "Defuse Kit" in player.inventory:
+                player.has_defuser = True
+            else:
+                player.has_defuser = False
+
+    def _update_players(self) -> None:
+        # empty tick
+        if self.current_tick.empty:
+            return
+        
+        for player in self.get_players():
+            self._update_player(player)
 
     def _update_round(self) -> None:
         if self.current_tick.empty:	
@@ -69,14 +77,14 @@ class Match:
     def next_tick(self) -> None:
         self.tick += 1
         self.current_tick = self.game_info[self.game_info["tick"] == self.tick]
-        self._update_player_positions()
+        self._update_players()
         self._update_team_ids()
         self._update_round()
 
     def set_tick(self, tick: int) -> None:
         self.tick = tick
         self.current_tick = self.game_info[self.game_info["tick"] == self.tick]
-        self._update_player_positions()
+        self._update_players()
         self._update_round()
 
     def get_players(self) -> list[Player]:

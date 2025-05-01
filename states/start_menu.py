@@ -17,7 +17,7 @@ class StartMenu(GameState):
         self.default_button_width = self.screen.get_width() * 0.8
 
         # logo
-        self.logo = pygame.image.load("assets/logo.png").convert_alpha() 
+        self.logo = pygame.image.load("assets/images/logo.png").convert_alpha() 
         self.logo_scale = 0.7
         self.logo = pygame.transform.smoothscale(self.logo, (self.logo.get_rect().size[0] * self.logo_scale, self.logo.get_rect().size[1] * self.logo_scale))
 
@@ -84,7 +84,7 @@ class StartMenu(GameState):
         demo_parser = demoparser2.DemoParser(demo_file)
         game_info = demo_parser.parse_ticks(["X", "Y", "Z", "pitch", "yaw", "is_alive", "team", "player_steamid", 
                                             "team_rounds_total", "team_num", "total_rounds_played", "shots_fired",
-                                            "kills_total", "deaths_total", "assists_total",
+                                            "kills_total", "deaths_total", "assists_total", "inventory",
                                             "health", "armor_value", "active_weapon_name"])
         header_info = demo_parser.parse_header()
         map_name = header_info['map_name']

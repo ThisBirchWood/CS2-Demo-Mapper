@@ -1,5 +1,5 @@
 {
-    "material":  "maps/de_mirage.png",  
+    "material":  "assets/maps/overview/de_mirage.png",  
     "pos_x":     -3230, 
     "pos_y":     1713,  
     "scale":     5.00,  

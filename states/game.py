@@ -15,8 +15,8 @@ class Game(GameState):
     def __init__(self, switch_state_callback, context):
         super().__init__(switch_state_callback, context)
 
-        match_data_path = f"maps/{self.match.map_name}.json"
-        match_image_path = f"maps/{self.match.map_name}.png"
+        match_data_path = f"assets/maps/config/{self.match.map_name}.json"
+        match_image_path = f"assets/maps/overview/{self.match.map_name}.png"
 
         # Screen Areas
         self.info_box = pygame.Surface((350, self.screen.get_height()), pygame.SRCALPHA)
