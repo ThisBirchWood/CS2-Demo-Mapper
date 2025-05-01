@@ -13,8 +13,13 @@ class PlayerRenderer:
         self.styling = styling
         self.player_font = pygame.font.Font(None, 15)
 
+        self.bomb_image = self.styling["bomb_image"]
+
         self.player_radius = 5
         self.hovered_radius = 10
+
+        self.bomb_radius = 10
+        self.bomb_hovered_radius = 15
 
         self.health_bar_foreground = (0, 255, 0)
         self.health_bar_background = (255, 0, 0)
@@ -41,6 +46,10 @@ class PlayerRenderer:
 
     ## Private Methods
     def _render_circle(self, player: Player, team):
+        if player.has_bomb:
+            self._render_bomb(player)
+            return
+
         if player.is_hovered:
             radius = self.hovered_radius
         else:
@@ -48,6 +57,16 @@ class PlayerRenderer:
 
         x, y = self.map_coord_converter.map_to_screen(player.x, player.y)
         pygame.draw.circle(self.screen, team.colour, (x, y), radius)
+
+    def _render_bomb(self, player: Player):
+        if player.is_hovered:
+            radius = self.bomb_hovered_radius
+        else:
+            radius = self.bomb_radius
+
+        x, y = self.map_coord_converter.map_to_screen(player.x, player.y)
+        bomb_image = pygame.transform.scale(self.bomb_image, (radius*2, radius*2))
+        self.screen.blit(bomb_image, (x-radius, y-radius))
 
     def _render_text(self, player):
         if player.is_selected:

@@ -30,6 +30,7 @@ def main():
             "background_colour": (30, 30, 30),
             "foreground_colour": (100, 100, 100),
             "player_selected_colour": (255, 255, 0),
+            "bomb_image": pygame.image.load("assets/images/bomb.png"),
         }
     }
 

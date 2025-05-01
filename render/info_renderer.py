@@ -12,7 +12,7 @@ class InfoRenderer:
         self.selected_player = None
 
         self.player_info_start_y = 100
-        self.match_info_start_y = 400
+        self.match_info_start_y = 500
 
     # Private methods
     def _render_player_info(self):
@@ -23,6 +23,7 @@ class InfoRenderer:
         else:
             player_info_title = f"Player: {self.selected_player.name}\n"
             player_info = f"Active Weapon: {self.selected_player.current_weapon}\n"
+            player_info += f"Inventory: \n  - {"\n  - ".join(self.selected_player.inventory)}\n"
             player_info += f"Health: {self.selected_player.health}\n"
             player_info += f"Armour: {self.selected_player.armour}\n"
             player_info += f"Kills: {self.selected_player.kills}\n"
