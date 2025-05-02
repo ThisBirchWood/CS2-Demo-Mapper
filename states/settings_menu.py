@@ -1,9 +1,6 @@
 from states.game_state import GameState
-from widgets.button import Button
-from widgets.switch import Switch
 from controllers.settings_controller import SettingsController
 from render.settings_menu_renderer import SettingsMenuRenderer
-import pygame
 
 class SettingsMenu(GameState):
     def __init__(self, switch_state_callback, context):

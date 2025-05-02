@@ -1,5 +1,4 @@
 import pygame
-import copy
 
 class ControlController:
     def __init__(self, control_renderer, box_top: tuple[int, int]):

@@ -41,7 +41,7 @@ class Button:
     def set_font_size(self, font_size: int) -> None:
         self.font_size = font_size
 
-    def set_font(self, font: pygame.Font) -> None:
+    def set_font(self, font: pygame.font.Font) -> None:
         self.font = font
 
     def set_text(self, text: str) -> None:

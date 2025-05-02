@@ -3,7 +3,6 @@ from widgets.button import Button
 from models.match import Match
 from models.player import Player
 from models.team import Team
-from pgu import gui
 import demoparser2
 import pygame
 import pygame_gui

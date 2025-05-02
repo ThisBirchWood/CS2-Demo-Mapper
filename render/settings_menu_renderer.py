@@ -1,4 +1,3 @@
-import pygame
 from widgets.button import Button
 from widgets.switch import Switch
 

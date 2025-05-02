@@ -1,5 +1,3 @@
-import pygame
-
 class InfoRenderer:
     def __init__(self, screen, styling, match):
         self.screen = screen
