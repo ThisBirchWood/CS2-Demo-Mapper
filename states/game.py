@@ -15,10 +15,15 @@ class Game(GameState):
     def __init__(self, switch_state_callback, context):
         super().__init__(switch_state_callback, context)
 
-        match_data_path = f"assets/maps/config/{self.match.map_name}.json"
-        match_image_path = f"assets/maps/overview/{self.match.map_name}.png"
+        self.match_data_path = f"assets/maps/config/{self.match.map_name}.json"
+        self.match_image_path = f"assets/maps/overview/{self.match.map_name}.png"
 
-        # Screen Areas
+        self.__init_screen_areas()
+        self.__init_utils()
+        self.__init_renderers()
+        self.__init_controllers()
+
+    def __init_screen_areas(self):
         self.info_box = pygame.Surface((350, self.screen.get_height()), pygame.SRCALPHA)
         self.info_box_top_left = (0, 0)
 
@@ -28,21 +33,22 @@ class Game(GameState):
         self.control_box = pygame.Surface((650, 120), pygame.SRCALPHA)
         self.control_box_top_left = (350, 650)
 
-        # Helper Classes
-        self.map_coord_controller = MapCoordConverter(self.game_box.get_width(), self.game_box.get_height(), match_data_path, match_image_path)
+    def __init_utils(self):
+        self.map_coord_controller = MapCoordConverter(self.game_box.get_width(), self.game_box.get_height(), self.match_data_path, self.match_image_path)
 
-        # Renderers
-        self.map_renderer = MapRenderer(self.game_box, match_data_path, match_image_path)
+    def __init_renderers(self):
+        self.map_renderer = MapRenderer(self.game_box, self.match_data_path, self.match_image_path)
         self.player_renderer = PlayerRenderer(self.game_box, self.match, self.map_coord_controller, self.options, self.styling)
         self.gui_render = GUIRenderer(self.screen, self.match)
         self.info_render = InfoRenderer(self.info_box, self.styling, self.match)
         self.control_render = ControlRenderer(self.control_box, self.match)
 
-        # Controllers
+    def __init_controllers(self):
         self.player_controller = PlayerController(self.player_renderer, self.match, self.game_box_top_left)
         self.gui_controller = GUIController(self.gui_render, self.switch_state)
         self.info_controller = InfoController(self.info_render, self.player_controller)
         self.control_controller = ControlController(self.control_render, self.control_box_top_left)
+
 
     def handle_events(self, events):
         """Handles user inputs."""
