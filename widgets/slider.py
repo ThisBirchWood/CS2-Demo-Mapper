@@ -15,7 +15,7 @@ class HorizontalSlider:
         self.knob_colour = (255, 0, 0)
         self.rect_radius = 5
 
-        self.knob_radius = 10
+        self.knob_radius = 5
         self.knob_x = self.x + self.knob_radius
         self.dragging = False
 
@@ -62,7 +62,7 @@ class HorizontalSlider:
             pygame.draw.rect(self.screen, self.background_colour, (self.x, self.y, self.width, self.height), border_radius=self.rect_radius)
 
     def _draw_knob(self):
-        pygame.draw.circle(self.screen, self.knob_colour, (int(self.knob_x), self.y + self.height // 2), self.knob_radius)
+        pygame.draw.line(self.screen, self.knob_colour, (self.knob_x, self.y), (self.knob_x, self.y + self.height), width=self.knob_radius)
 
     def draw(self):
         """
