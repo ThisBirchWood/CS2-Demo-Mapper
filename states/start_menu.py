@@ -85,14 +85,17 @@ class StartMenu(GameState):
                                             "team_rounds_total", "team_num", "total_rounds_played", "shots_fired",
                                             "kills_total", "deaths_total", "assists_total", "inventory",
                                             "health", "armor_value", "active_weapon_name"])
+        round_changes = demo_parser.parse_events(["round_start", "is_ct_timeout"])
         header_info = demo_parser.parse_header()
         map_name = header_info['map_name']
         players = demo_parser.parse_player_info()
 
+        print(demo_parser.list_game_events())
+
         team_1 = Team()
         team_2 = Team()
         team_2.set_ct()
-        m = Match(map_name, game_info, team_1, team_2, self.options)
+        m = Match(map_name, game_info, team_1, team_2, round_changes)
         for index, row in players.iterrows():
             if row["team_number"] == 2:
                 team_1.add_player(Player(row["name"], row["steamid"]))

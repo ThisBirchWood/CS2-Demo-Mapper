@@ -54,16 +54,23 @@ class HorizontalSlider:
                 self.knob_x = event.pos[0]
                 self.value = self._knob_to_value(self.knob_x)
 
-    def draw(self):
-        """
-        Draw the slider on the screen
-        """
+    def _draw_slider(self):
         if self.fill:
             pygame.draw.rect(self.screen, self.fill_colour, (self.x, self.y, self.knob_x, self.height), border_radius=self.rect_radius)
             pygame.draw.rect(self.screen, self.background_colour, (self.knob_x, self.y, self.width - (self.knob_x - self.x), self.height), border_radius=self.rect_radius)
         else:
             pygame.draw.rect(self.screen, self.background_colour, (self.x, self.y, self.width, self.height), border_radius=self.rect_radius)
+
+    def _draw_knob(self):
         pygame.draw.circle(self.screen, self.knob_colour, (int(self.knob_x), self.y + self.height // 2), self.knob_radius)
+
+    def draw(self):
+        """
+        Draw the slider on the screen
+        """
+        self._draw_slider()
+        self._draw_knob()
+      
 
     def set_value(self, value):
         """
@@ -88,6 +95,9 @@ class HorizontalSlider:
 
     def set_knob_colour(self, colour):
         self.knob_colour = colour
+
+    def set_fill_colour(self, colour):
+        self.fill_colour = colour
 
 if __name__ == "__main__":
     pygame.init()

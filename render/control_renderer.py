@@ -1,5 +1,5 @@
 import pygame
-from widgets.slider import HorizontalSlider
+from widgets.break_slider import BreakSlider
 
 class ControlRenderer:
     def __init__(self, screen, match):
@@ -8,7 +8,10 @@ class ControlRenderer:
         self.match = match
         self.colour = (255, 255, 255)
 
-        self.slider = HorizontalSlider(self.screen, 50, 0, self.screen.get_width()-50, 20, 1, self.match.max_tick)
+        self.slider = BreakSlider(self.screen, 50, 0, self.screen.get_width()-50, 20, 1, self.match.max_tick)
+        self.slider.fill = True
+        self.slider.set_breakpoints(self.match.round_start_times)
+        self.slider.set_fill_colour((0,0,0))
 
     def _render_slider(self):
         # Update slider value

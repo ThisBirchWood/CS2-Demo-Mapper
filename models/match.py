@@ -2,11 +2,13 @@ from models.player import Player
 from models.team import Team
 
 class Match:
-    def __init__(self, map_name, game_info, team_1: Team, team_2: Team, tick_rate=64):
+    def __init__(self, map_name, game_info, team_1: Team, team_2: Team, game_events, tick_rate=64):
         self.team_1 = team_1
         self.team_2 = team_2
 
         self.map_name = map_name
+        self.game_events = game_events
+        self.round_start_times = list(self.game_events[0][1]["tick"])
 
         self.tick = 1
         self.current_tick = game_info[game_info["tick"] == self.tick]
