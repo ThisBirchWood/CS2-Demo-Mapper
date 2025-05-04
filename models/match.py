@@ -2,7 +2,7 @@ from models.player import Player
 from models.team import Team
 
 class Match:
-    def __init__(self, map_name, game_info, team_1: Team, team_2: Team, game_events, tick_rate=64):
+    def __init__(self, map_name, game_info, team_1: Team, team_2: Team, game_events, tick_rate=128):
         self.team_1 = team_1
         self.team_2 = team_2
 
@@ -20,30 +20,37 @@ class Match:
         self.tick_rate = tick_rate
 
     def _update_player(self, player: Player) -> None:
-            player.x = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["X"].values[0]
-            player.y = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Y"].values[0]
-            player.z = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["Z"].values[0]
-            player.pitch = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["pitch"].values[0]
-            player.yaw = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["yaw"].values[0]
-            player.dead = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["is_alive"].values[0] == 0
-            player.is_shooting = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["shots_fired"].values[0]
-            player.health = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["health"].values[0])
-            player.armour = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["armor_value"].values[0])
-            player.current_weapon = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["active_weapon_name"].values[0]
-            player.kills = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["kills_total"].values[0])
-            player.deaths = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["deaths_total"].values[0])
-            player.assists = int(self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["assists_total"].values[0])
-            player.inventory = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]["inventory"].values[0]
+        player_row = self.current_tick[self.current_tick["player_steamid"] == player.steam_id]
 
-            if "C4 Explosive" in player.inventory:
-                player.has_bomb = True
-            else:
-                player.has_bomb = False
+        if player_row.empty:
+            return 
 
-            if "Defuse Kit" in player.inventory:
-                player.has_defuser = True
-            else:
-                player.has_defuser = False
+        row = player_row.iloc[0] 
+
+        player.x = row["X"]
+        player.y = row["Y"]
+        player.z = row["Z"]
+        player.pitch = row["pitch"]
+        player.yaw = row["yaw"]
+        player.dead = row["is_alive"] == 0
+        player.is_shooting = row["shots_fired"]
+        player.health = int(row["health"])
+        player.armour = int(row["armor_value"])
+        player.current_weapon = row["active_weapon_name"]
+        player.kills = int(row["kills_total"])
+        player.deaths = int(row["deaths_total"])
+        player.assists = int(row["assists_total"])
+        player.inventory = row["inventory"]
+
+        if "C4 Explosive" in player.inventory:
+            player.has_bomb = True
+        else:
+            player.has_bomb = False
+
+        if "Defuse Kit" in player.inventory:
+            player.has_defuser = True
+        else:
+            player.has_defuser = False
 
     def _update_players(self) -> None:
         # empty tick
