@@ -1,3 +1,4 @@
+import time
 from states.game_state import GameState
 from controllers.player_controller import PlayerController
 from render.map_renderer import MapRenderer
@@ -17,6 +18,10 @@ class Game(GameState):
 
         self.match_data_path = f"assets/maps/config/{self.match.map_name}.json"
         self.match_image_path = f"assets/maps/overview/{self.match.map_name}.png"
+        
+        self.game_update_interval = 1 / self.match.tick_rate
+        self.elapsed_time = 0
+        self.last_time = time.perf_counter()
 
         self.__init_screen_areas()
         self.__init_utils()
@@ -49,7 +54,6 @@ class Game(GameState):
         self.info_controller = InfoController(self.info_render, self.player_controller)
         self.control_controller = ControlController(self.control_render, self.control_box_top_left)
 
-
     def handle_events(self, events):
         """Handles user inputs."""
         for event in events:
@@ -61,8 +65,15 @@ class Game(GameState):
             self.control_controller.update(event)
 
     def update(self):
-        """Updates game objects."""
-        self.match.next_tick()
+        """Fixed-timestep update decoupled from frame rate."""
+        now = time.perf_counter()
+        delta = now - self.last_time
+        self.last_time = now
+        self.elapsed_time += delta
+
+        while self.elapsed_time >= self.game_update_interval:
+            self.match.next_tick()
+            self.elapsed_time -= self.game_update_interval
 
     def draw(self):
         """Draws everything on screen."""

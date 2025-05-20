@@ -8,6 +8,7 @@ class Team:
         self.players = []
         self.score = 0
         self.id = 1
+        self.set_ct()
 
     def add_player(self, player: Player):
         self.players.append(player)

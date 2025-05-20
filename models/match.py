@@ -2,7 +2,7 @@ from models.player import Player
 from models.team import Team
 
 class Match:
-    def __init__(self, map_name, game_info, team_1: Team, team_2: Team, game_events, tick_rate=128):
+    def __init__(self, map_name, game_info, team_1: Team, team_2: Team, game_events, tick_rate=64):
         self.team_1 = team_1
         self.team_2 = team_2
 
